@@ -22,6 +22,27 @@ const obtenerEventos = async () => {
     }
 }
 
+const obtenerEventosProximos = async () => {
+
+    try {
+        const _evento = await Evento.findAll({
+            where: {
+                fecha_evento: {
+                    [Op.gte]: new Date(),
+                },
+            },
+            order: [
+                ['fecha_evento', 'ASC']
+            ],
+        })
+
+        return _evento
+
+    } catch (error) {
+        throw new Error('Error al obtener los Evento: ' + error.message)
+    }
+}
+
 const obteneEventoPorId = async (id) => {
     try {
         const _evento = await Evento.findByPk(id)
@@ -126,6 +147,7 @@ const eliminarEvento = async (id) => {
 
 export {
     obtenerEventos,
+    obtenerEventosProximos,
     obteneEventoPorId,
     guardarEvento,
     eliminarEvento,

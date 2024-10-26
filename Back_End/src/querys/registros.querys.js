@@ -9,6 +9,7 @@ const {
 } = SDM
 
 import {
+    Usuarios,
     RegistroAsistencia
 } from '../models/asociacion.js'
 
@@ -21,10 +22,51 @@ const obtenerRegistros = async () => {
     }
 }
 
+const obtenerRegistrosAsistentes = async (evento_id) => {
+
+    try {
+        const _registroAsistentes = await RegistroAsistencia.findAll({
+            where: {
+                evento_id: evento_id,
+                asistio: true,
+            },
+            include: [{
+                model: Usuarios,
+                as: 'usuarios',
+                attributes: ['nombre_usuario', 'email_usuario'],
+            }, ],
+        })
+
+        console.log('_registroAsistentes', _registroAsistentes)
+
+        return _registroAsistentes
+
+    } catch (error) {
+        throw new Error('Error al obtener los Registro de Asistencia: ' + error.message)
+    }
+}
+
 const obteneRegistroPorId = async (id) => {
     try {
         const _registroAsistencia = await RegistroAsistencia.findByPk(id)
         return _registroAsistencia
+    } catch (error) {
+        console.log(error)
+        throw new Error('Error al obtener el Registro de Asistencia: ' + error.message)
+    }
+}
+
+const verificarExistenciaDeRegistro = async (evento, usuario) => {
+
+    try {
+        const registroExistente = await RegistroAsistencia.findOne({
+            where: {
+                evento_id: evento,
+                usuario_id: usuario,
+            },
+        })
+        return registroExistente
+
     } catch (error) {
         console.log(error)
         throw new Error('Error al obtener el Registro de Asistencia: ' + error.message)
@@ -47,6 +89,11 @@ const guardarRegistroAsistencia = async (id, nuevoRegistro) => {
         } else {
 
             console.log('Registro de Asistencia A guardar:', nuevoRegistro)
+
+            if (nuevoRegistro.asistio) {
+                let hoy = new Date().toISOString().split('T')[0]
+                nuevoRegistro.fecha_confirmacion = hoy
+            }
 
             const [actualizacion] = await RegistroAsistencia.update(nuevoRegistro, {
                 where: {
@@ -117,7 +164,9 @@ const eliminarRegistroAsistencia = async (id) => {
 
 export {
     obtenerRegistros,
+    obtenerRegistrosAsistentes,
     obteneRegistroPorId,
     guardarRegistroAsistencia,
-    eliminarRegistroAsistencia
+    eliminarRegistroAsistencia,
+    verificarExistenciaDeRegistro
 }

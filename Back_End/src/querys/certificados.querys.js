@@ -9,7 +9,9 @@ const {
 } = SDM
 
 import {
-    Certificados
+    Certificados,
+    RegistroAsistencia,
+    Usuarios
 } from '../models/asociacion.js'
 
 const obtenerCertificados = async () => {
@@ -25,6 +27,36 @@ const obteneCertificadoPorId = async (id) => {
     try {
         const Certificado = await Certificados.findByPk(id)
         return Certificado
+    } catch (error) {
+        throw new Error('Error al obtener el Certificado: ' + error.message)
+    }
+}
+
+const obteneCertificadoPorEmail = async (email) => {
+
+    try {
+        const _certificados = await Certificados.findAll({
+            attributes: ['url_certificado'],
+            include: [{
+                model: RegistroAsistencia,
+                as: 'registroAsistencia', // Alias correcto
+                required: true,
+                where: {
+                    asistio: true
+                },
+                include: [{
+                    model: Usuarios,
+                    as: 'usuarios', // Alias correcto
+                    required: true,
+                    where: {
+                        email_usuario: email
+                    },
+                }, ],
+            }, ],
+        })
+
+        return _certificados
+
     } catch (error) {
         throw new Error('Error al obtener el Certificado: ' + error.message)
     }
@@ -117,6 +149,7 @@ const eliminarCertificado = async (id) => {
 export {
     obtenerCertificados,
     obteneCertificadoPorId,
+    obteneCertificadoPorEmail,
     guardarCertificado,
     eliminarCertificado,
 }

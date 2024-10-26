@@ -1,8 +1,8 @@
 import routesUsuarios from "./usuarios.routes.js"
-import routesCertificados from './certificados.routes.js'
-import routesAsistencia from './registroAsistencia.routes.js'
-import routesEventos from './eventos.routes.js'
 import routesOrganizadores from './organizadores.routes.js'
+import routesEventos from './eventos.routes.js'
+import routesAsistencia from './registroAsistencia.routes.js'
+import routesCertificados from './certificados.routes.js'
 
 
 export default [{
@@ -10,21 +10,19 @@ export default [{
         router: routesUsuarios
     },
     {
-        path: '/certificados',
-        router: routesCertificados
+        path: '/organizadores',
+        router: routesOrganizadores
+    },
+    {
+        path: '/eventos',
+        router: routesEventos
     },
     {
         path: '/asistencia',
         router: routesAsistencia
     },
     {
-        path: '/eventos',
-        router: routesEventos
+        path: '/certificados',
+        router: routesCertificados
     },
-
-    {
-        path: '/organizadores',
-        router: routesOrganizadores
-    },
-
 ]

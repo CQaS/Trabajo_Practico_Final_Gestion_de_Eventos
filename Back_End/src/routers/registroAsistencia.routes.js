@@ -3,6 +3,7 @@ import {
 } from "express"
 import {
     registroAsistencia_lista,
+    listarUsuariosAsistentes,
     registroAsistencia_porid,
     crear_registroAsistencia,
     editar_registroAsistencia,
@@ -18,6 +19,7 @@ import {
 const routesRegistroAsistencia = Router()
 
 routesRegistroAsistencia.get('/registroAsistencia_lista', registroAsistencia_lista)
+routesRegistroAsistencia.get('/listarUsuariosAsistentes/:eventoid', listarUsuariosAsistentes)
 routesRegistroAsistencia.get('/:id', registroAsistencia_porid)
 routesRegistroAsistencia.post('/crear_registroAsistencia', validarSchemmaGenerico(registroAsistenciaSchema), crear_registroAsistencia)
 routesRegistroAsistencia.put('/editar_registroAsistencia/:id', validarSchemmaGenerico(registroAsistenciaSchema), editar_registroAsistencia)

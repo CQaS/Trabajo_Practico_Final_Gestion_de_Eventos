@@ -1,12 +1,17 @@
 import {
     obtenerRegistros,
+    obtenerRegistrosAsistentes,
     obteneRegistroPorId,
     guardarRegistroAsistencia,
-    eliminarRegistroAsistencia
+    eliminarRegistroAsistencia,
+    verificarExistenciaDeRegistro
 } from '../querys/registros.querys.js'
 import {
     obtenerUsuarioPorId
 } from '../querys/usuarios.querys.js'
+import {
+    obteneEventoPorId
+} from '../querys/eventos.querys.js'
 
 export const registroAsistencia_lista = async (req, res) => {
     try {
@@ -14,6 +19,24 @@ export const registroAsistencia_lista = async (req, res) => {
         console.log(_obtenerRegistroAsistencia)
         console.log(_obtenerRegistroAsistencia.length)
         res.json(_obtenerRegistroAsistencia)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
+export const listarUsuariosAsistentes = async (req, res) => {
+    try {
+        const eventoid = req.params.eventoid
+
+        const _listarUsuariosAsistentes = await obtenerRegistrosAsistentes(eventoid)
+        console.log(_listarUsuariosAsistentes)
+        console.log(_listarUsuariosAsistentes.length)
+        res.json(_listarUsuariosAsistentes)
 
     } catch (err) {
         console.error(err)
@@ -60,10 +83,23 @@ export const crear_registroAsistencia = async (req, res) => {
         } = req.body
 
         const existeUsuario = await obtenerUsuarioPorId(usuario_id)
-
         if (existeUsuario == null) {
             return res.status(404).json({
                 Error: `Usuario no existe: ${usuario_id}`
+            })
+        }
+
+        const _eventoPorId = await obteneEventoPorId(evento_id)
+        if (_eventoPorId == null) {
+            return res.status(404).json({
+                Error: `Evento: ${evento_id} no encontrado!`
+            })
+        }
+
+        let existenciaDeRegistro = await verificarExistenciaDeRegistro(evento_id, usuario_id)
+        if (existenciaDeRegistro != null) {
+            return res.status(409).json({
+                Error: `El Usuario: ${existeUsuario.nombre_usuario}, ya se encuentra registrado en el Evento: ${_eventoPorId.nombre_evento}!`
             })
         }
 
@@ -91,28 +127,36 @@ export const crear_registroAsistencia = async (req, res) => {
 }
 
 export const editar_registroAsistencia = async (req, res) => {
+
     try {
         const id = req.params.id
         const {
             evento_id,
-            usuarioId
+            usuario_id
         } = req.body
 
 
-        /* let _registroAsistenciaPorId = await obteneRegistroPorId(id)
-        if (_registroAsistenciaPorId == null) {
+        let _usuarioPorId = await obtenerUsuarioPorId(usuario_id)
+        if (_usuarioPorId == null) {
             return res.status(404).json({
-                Error: `Registro de Asistencia: ${id} no encontrado!`
+                Error: `Usuario: ${usuario_id} no encontrado!`
             })
         }
 
-        const existeRegistro = await obteneRegistroPorId(registro_id)
+        let _eventoPorId = await obteneEventoPorId(evento_id)
+        if (_eventoPorId == null) {
+            return res.status(404).json({
+                Error: `Evento: ${evento_id} no encontrado!`
+            })
+        }
+
+        const existeRegistro = await obteneRegistroPorId(id)
 
         if (existeRegistro == null) {
             return res.status(404).json({
-                Error: `Registro de asistencia no existe: ${registro_id}`
+                Error: `Registro de asistencia no existe: ${id}`
             })
-        } */
+        }
 
         const _registroAsistenciaGuardado = await guardarRegistroAsistencia(id, req.body)
 

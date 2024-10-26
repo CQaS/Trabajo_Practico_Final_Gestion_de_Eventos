@@ -1,6 +1,7 @@
 import {
     obtenerCertificados,
     obteneCertificadoPorId,
+    obteneCertificadoPorEmail,
     guardarCertificado,
     eliminarCertificado
 } from '../querys/certificados.querys.js'
@@ -35,6 +36,26 @@ export const certificado_porid = async (req, res) => {
             Error: 'certificado no encontrado!'
         }
         res.json(_certificadoPorId)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
+export const certificado_porEmail = async (req, res) => {
+
+    try {
+        const email = req.params.email
+
+        let _certificadoPorEmail = await obteneCertificadoPorEmail(email)
+        _certificadoPorEmail != null ? console.log(_certificadoPorEmail) : _certificadoPorEmail = {
+            Error: 'Certificados no encontrados!'
+        }
+        res.json(_certificadoPorEmail)
 
     } catch (err) {
         console.error(err)

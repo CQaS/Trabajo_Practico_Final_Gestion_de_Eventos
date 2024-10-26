@@ -60,8 +60,8 @@ RegistroAsistencia.init({
     },
     fecha_confirmacion: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
+        allowNull: true,
+        defaultValue: null,
         validate: {
             isDate: {
                 msg: 'Fecha de Confirmacion debe ser una fecha válida.'

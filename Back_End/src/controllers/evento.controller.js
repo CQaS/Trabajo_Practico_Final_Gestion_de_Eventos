@@ -1,5 +1,6 @@
 import {
     obtenerEventos,
+    obtenerEventosProximos,
     obteneEventoPorId,
     guardarEvento,
     eliminarEvento
@@ -11,6 +12,22 @@ export const eventos_lista = async (req, res) => {
         console.log(_obtenerEventos)
         console.log(_obtenerEventos.length)
         res.json(_obtenerEventos)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
+export const eventos_proximos = async (req, res) => {
+    try {
+        const _obtenerEventosProximos = await obtenerEventosProximos()
+        console.log(_obtenerEventosProximos)
+        console.log(_obtenerEventosProximos.length)
+        res.json(_obtenerEventosProximos)
 
     } catch (err) {
         console.error(err)
