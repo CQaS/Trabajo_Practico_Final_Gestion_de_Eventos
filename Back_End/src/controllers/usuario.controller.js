@@ -23,6 +23,26 @@ export const usuarios_lista = async (req, res) => {
     }
 }
 
+export const usuario_porid = async (req, res) => {
+
+    try {
+        const id = req.params.id
+
+        let _usuarioPorId = await obtenerUsuarioPorId(id)
+        _usuarioPorId != null ? console.log(_usuarioPorId) : _usuarioPorId = {
+            Error: 'Usuario no encontrado!'
+        }
+        res.json(_usuarioPorId)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
 export const crear_usuario = async (req, res) => {
 
     /* {
@@ -82,64 +102,54 @@ export const crear_usuario = async (req, res) => {
     }
 }
 
-export const editar_cliente = async (req, res) => {
+export const editar_usuario = async (req, res) => {
     try {
         const id = req.params.id
         const {
-            dni_cliente,
-            rg_cliente,
-            email_cliente
+            email_usuario,
+            dni_usuario
         } = req.body
 
-        const el_cliente = await consultarCliente(id)
-        if (el_cliente == null) {
+
+        let _usuarioPorId = await obtenerUsuarioPorId(id)
+        if (_usuarioPorId == null) {
             return res.status(404).json({
-                Error: "Cliente no encontrado"
+                Error: `Usuario: ${id} no encontrado!`
             })
         }
 
-        if (dni_cliente != el_cliente.dni_cliente) {
-            const existeDNI = await consultarDni(dni_cliente)
+        if (dni_usuario != _usuarioPorId.dni_usuario) {
+            const existeDNI = await consultarDni(dni_usuario)
             console.log(existeDNI)
 
-            if (existeDNI.length > 0) {
+            if (existeDNI != null) {
                 return res.status(404).json({
-                    Error: `DNI ya existe: ${dni_cliente}`
+                    Error: `DNI ya existe: ${dni_usuario}`
                 })
             }
         }
 
-        if (rg_cliente != el_cliente.rg_cliente) {
-            const existeRG = await consultarRG(rg_cliente)
+        if (email_usuario != _usuarioPorId.email_usuario) {
+            const existeEmail = await consultarEmail(email_usuario)
 
-            if (existeRG.length > 0) {
+            if (existeEmail != null) {
                 return res.status(404).json({
-                    Error: `RG ya existe: ${rg_cliente}`
+                    Error: `Email ya existe: ${email_usuario}`
                 })
             }
         }
 
-        if (email_cliente != el_cliente.email_cliente) {
-            const existeEmail = await consultarEmail(email_cliente)
+        const UsuarioGuardado = await guardarUsuario(id, req.body)
 
-            if (existeEmail.length > 0) {
-                return res.status(404).json({
-                    Error: `Email ya existe: ${email_cliente}`
-                })
-            }
+        if (UsuarioGuardado.ok) {
+
+            return res.status(200).json(UsuarioGuardado)
         }
 
-        const ClienteGuardado = await guardarCliente(id, req.body)
-
-        if (ClienteGuardado.ok) {
-
-            return res.status(200).json(ClienteGuardado)
-        }
-
-        if (ClienteGuardado.Error) {
+        if (UsuarioGuardado.Error) {
 
             return res.status(404).json({
-                Error: 'Error al guardar el Cliente!'
+                Error: 'Error al guardar el Usuario!'
             })
         }
 
@@ -152,10 +162,10 @@ export const editar_cliente = async (req, res) => {
     }
 }
 
-export const eliminar_cliente = async (req, res) => {
+export const eliminar_usuario = async (req, res) => {
     try {
         const id = req.params.id
-        const resultado = await eliminarCliente(id)
+        const resultado = await eliminarUsuario(id)
         if (resultado.Error) {
             return res.status(404).json({
                 Error: resultado.Error

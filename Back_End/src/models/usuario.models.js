@@ -95,7 +95,7 @@ Usuarios.init({
         allowNull: false,
         validate: {
             isInt: true,
-            min: 1000000000, // Ejemplo de validación para números de 10 dígitos
+            min: 1000000000, // validación para números de 10 dígitos
             max: 9999999999,
         },
     },

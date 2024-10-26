@@ -1,64 +1,63 @@
 import Usuarios from './usuario.models.js'
-/* import Organizador from './Organizadores.models.js'
-import Eventos from './Eventos.models.js'
-import RegistroAsistencias from './Registro_Asistencia.models.js'
-import Certificados from './Certificados.models.js' */
+import Organizador from './organizador.models.js'
+import Evento from './evento.models.js'
+import RegistroAsistencia from './Registro_Asistencia.models.js'
+import Certificados from './Certificado.models.js'
 
 
-/* // Un Organizador tiene muchos Eventos
-Organizador.hasMany(Eventos, {
+// Un Organizador tiene muchos Eventos
+Organizador.hasMany(Evento, {
     foreignKey: 'organizador_id',
     as: 'eventos',
 })
 
 // Un Evento pertenece a un Organizador
-Eventos.belongsTo(Organizador, {
+Evento.belongsTo(Organizador, {
     foreignKey: 'organizador_id',
     as: 'organizador',
 })
 
 // Un Usuarios tiene muchos Registros de Asistencia
-Usuarios.hasMany(RegistroAsistencias, {
-    foreignKey: 'usuarios_id',
+Usuarios.hasMany(RegistroAsistencia, {
+    foreignKey: 'usuario_id',
     as: 'registrosAsistencia',
 })
 
 // Un Registro de Asistencia pertenece a un Usuario
-RegistroAsistencias.belongsTo(Usuarios, {
+RegistroAsistencia.belongsTo(Usuarios, {
     foreignKey: 'usuario_id',
     as: 'usuarios',
 })
 
 // Un Evento tiene muchos Registros de Asistencia
-Eventos.hasMany(RegistroAsistencias, {
+Evento.hasMany(RegistroAsistencia, {
     foreignKey: 'evento_id',
     as: 'registrosAsistencia',
 })
 
 // Un Registro de Asistencia pertenece a un Evento
-RegistroAsistencias.belongsTo(Eventos, {
+RegistroAsistencia.belongsTo(Evento, {
     foreignKey: 'evento_id',
     as: 'evento',
 })
 
 // Un Registro de Asistencia puede tener un Certificado
-RegistroAsistencias.hasOne(Certificados, {
+RegistroAsistencia.hasOne(Certificados, {
     foreignKey: 'registro_id',
     as: 'certificado',
 })
 
 // Un Certificado pertenece a un Registro de Asistencia
-Certificados.belongsTo(RegistroAsistencias, {
+Certificados.belongsTo(RegistroAsistencia, {
     foreignKey: 'registro_id',
     as: 'registroAsistencia',
-}) */
+})
 
-// Exportar el sequelize y las relaciones
 export {
     Usuarios,
-    /* Organizador,
-    Eventos,
-    RegistroAsistencias,
-    Certificados */
+    Organizador,
+    Evento,
+    RegistroAsistencia,
+    Certificados
 
 }

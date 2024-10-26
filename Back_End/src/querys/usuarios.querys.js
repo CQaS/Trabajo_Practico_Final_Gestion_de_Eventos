@@ -45,6 +45,8 @@ const guardarUsuario = async (id, datosUsuario) => {
 
         } else {
 
+            console.log('Usuario A guardar:', datosUsuario)
+
             const [actualizacion] = await Usuarios.update(datosUsuario, {
                 where: {
                     id_usuario: id
@@ -97,12 +99,18 @@ const eliminarUsuario = async (id) => {
     try {
         const usuario = await Usuarios.findByPk(id)
         if (!usuario) {
-            throw new Error('Usuario no encontrado')
+            return {
+                Error: 'Usuario no encontrado'
+            }
         }
         await usuario.destroy()
-        return true
+        return {
+            ok: 'Usuario eliminado con Exito!'
+        }
     } catch (error) {
-        throw new Error('Error al eliminar el usuario: ' + error.message)
+        return {
+            Error: 'Error al eliminar el usuario: ' + error.message
+        }
     }
 }
 

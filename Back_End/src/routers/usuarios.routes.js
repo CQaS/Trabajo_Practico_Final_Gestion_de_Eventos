@@ -3,7 +3,10 @@ import {
 } from "express"
 import {
     usuarios_lista,
+    usuario_porid,
     crear_usuario,
+    editar_usuario,
+    eliminar_usuario
 } from "../controllers/usuario.controller.js"
 import {
     validarSchemmaGenerico
@@ -15,11 +18,9 @@ import {
 const routesUsuarios = Router()
 
 routesUsuarios.get('/usuarios_lista', usuarios_lista)
-/* routesUsuarios.get('/recibo_cliente/:id', recibo_cliente)
- */
-routesUsuarios.post('/crear_usuarios', validarSchemmaGenerico(usuarioSchema), crear_usuario)
-/*
-routesUsuarios.put('/editar_cliente/:id', validarSchemmaGenerico(ClientesSchema), editar_cliente)
-routesUsuarios.delete('/eliminar_cliente/:id', eliminar_cliente) */
+routesUsuarios.get('/:id', usuario_porid)
+routesUsuarios.post('/crear_usuario', validarSchemmaGenerico(usuarioSchema), crear_usuario)
+routesUsuarios.put('/editar_usuario/:id', validarSchemmaGenerico(usuarioSchema), editar_usuario)
+routesUsuarios.delete('/eliminar_usuario/:id', eliminar_usuario)
 
 export default routesUsuarios

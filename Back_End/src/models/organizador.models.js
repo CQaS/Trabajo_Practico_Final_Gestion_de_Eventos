@@ -92,6 +92,6 @@ Organizador.init({
             }
         },
     },
-});
+})
 
-export default Organizador;
+export default Organizador

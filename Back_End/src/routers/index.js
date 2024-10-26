@@ -1,28 +1,30 @@
 import routesUsuarios from "./usuarios.routes.js"
-/* import routesClientes from './clientes.routes.js'
-import routesEmpleados from './empleados.routes.js'
-import routesContratos from './contratos.routes.js'
-import AuthUser from './authusers.routes.js' */
+import routesCertificados from './certificados.routes.js'
+import routesAsistencia from './registroAsistencia.routes.js'
+import routesEventos from './eventos.routes.js'
+import routesOrganizadores from './organizadores.routes.js'
+
 
 export default [{
         path: '/usuarios',
         router: routesUsuarios
     },
-    /* 
-        {
-            path: '/clientes',
-            router: routesClientes
-        },
-        {
-            path: '/empleados',
-            router: routesEmpleados
-        },
-        {
-            path: '/contratos',
-            router: routesContratos
-        },
-        {
-            path: '/authusers',
-            router: AuthUser
-        }, */
+    {
+        path: '/certificados',
+        router: routesCertificados
+    },
+    {
+        path: '/asistencia',
+        router: routesAsistencia
+    },
+    {
+        path: '/eventos',
+        router: routesEventos
+    },
+
+    {
+        path: '/organizadores',
+        router: routesOrganizadores
+    },
+
 ]
