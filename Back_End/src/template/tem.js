@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+export const plantilla = (data) => {
+
+    const {
+        nombreCompleto,
+        nombreEvento,
+        fechaEvento,
+        lugarEvento,
+        fechaEmision
+    } = data
+
+    return `<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -63,14 +73,14 @@
     <div class="container">
         <h1>Certificado de Asistencia</h1>
         <p>Otorgado a:</p>
-        <h2>{{nombreCompleto}}</h2>
+        <h2>${nombreCompleto}</h2>
         <p>Por su participación en el evento:</p>
-        <h2>{{nombreEvento}}</h2>
+        <h2>${nombreEvento}</h2>
 
         <div class="event-info">
             <p>
-                El evento tuvo lugar el día <strong>{{fechaEvento}}</strong> en
-                <strong>{{lugarEvento}}</strong>.
+                El evento tuvo lugar el día <strong>${fechaEvento}</strong> en
+                <strong>${lugarEvento}</strong>.
             </p>
             <p>
                 Agradecemos su asistencia y participación activa.
@@ -79,9 +89,10 @@
 
         <div class="signature">
             <div>Firma del Organizador</div>
-            <div>Fecha de Emisión: {{fechaEmision}}</div>
+            <div>Fecha de Emisión: ${fechaEmision}</div>
         </div>
     </div>
 </body>
 
-</html>
+</html>`
+}

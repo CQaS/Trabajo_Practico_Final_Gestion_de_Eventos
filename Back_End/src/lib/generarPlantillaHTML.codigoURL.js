@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import pdf from 'html-pdf-node'
-import puppeteer from 'puppeteer'
 import {
     fileURLToPath
 } from 'url'
+import {
+    plantilla
+} from '../template/tem.js'
 
 const generarCodigoAleatorio = () => {
 
@@ -13,47 +14,26 @@ const generarCodigoAleatorio = () => {
 
 export const generarHTML_CodigoAleatorio = async (datos) => {
 
-    const {
-        nombreCompleto,
-        nombreEvento,
-        fechaEvento,
-        lugarEvento,
-        fechaEmision
-    } = datos
-
     let codigo = ''
 
     try {
 
         codigo = generarCodigoAleatorio()
 
-        /* let html = fs.readFileSync('./src/template/tem.html', 'utf-8')
-        html = html
-            .replace('{{nombreCompleto}}', nombreCompleto)
-            .replace('{{nombreEvento}}', nombreEvento)
-            .replace('{{fechaEvento}}', fechaEvento)
-            .replace('{{lugarEvento}}', lugarEvento)
-            .replace('{{fechaEmision}}', fechaEmision)
-
         const __filename = fileURLToPath(
             import.meta.url)
         const __dirname = path.dirname(__filename)
 
-        const filePath = path.join(__dirname, 'certificados', `${codigo}.pdf`)
+        const pathCertificadoHTML = path.join(__dirname, `../certificados/certificado_${codigo}.html`)
 
-        const options = {
-            format: 'A4',
-            printBackground: true,
-            browser: puppeteer,
-        };
-        const file = {
-            content: html
-        }
+        fs.writeFile(pathCertificadoHTML, plantilla(datos), 'utf8', (err) => {
 
-        await pdf.generatePdf(file, options).then((buffer) => {
-            fs.writeFileSync(filePath, buffer)
-            console.log(`Certificado guardado: ${filePath}`)
-        }) */
+            if (err) {
+
+                console.error('Error al escribir en el archivo:', err)
+                codigo = null
+            }
+        })
 
         return codigo
 
