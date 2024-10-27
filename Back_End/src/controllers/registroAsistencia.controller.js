@@ -12,6 +12,13 @@ import {
 import {
     obteneEventoPorId
 } from '../querys/eventos.querys.js'
+import {
+    guardarCertificado
+} from '../querys/certificados.querys.js'
+
+import {
+    generarHTML_CodigoAleatorio
+} from '../lib/generarPlantillaHTML.codigoURL.js'
 
 export const registroAsistencia_lista = async (req, res) => {
     try {
@@ -135,6 +142,12 @@ export const editar_registroAsistencia = async (req, res) => {
             usuario_id
         } = req.body
 
+        const existeRegistro = await obteneRegistroPorId(id)
+        if (existeRegistro == null) {
+            return res.status(404).json({
+                Error: `Registro de asistencia no existe: ${id}`
+            })
+        }
 
         let _usuarioPorId = await obtenerUsuarioPorId(usuario_id)
         if (_usuarioPorId == null) {
@@ -150,22 +163,68 @@ export const editar_registroAsistencia = async (req, res) => {
             })
         }
 
-        const existeRegistro = await obteneRegistroPorId(id)
-
-        if (existeRegistro == null) {
-            return res.status(404).json({
-                Error: `Registro de asistencia no existe: ${id}`
-            })
-        }
 
         const _registroAsistenciaGuardado = await guardarRegistroAsistencia(id, req.body)
 
-        if (_registroAsistenciaGuardado.ok) {
+        if (_registroAsistenciaGuardado.ok && _registroAsistenciaGuardado.asistio) {
+
+            const datosCertificado = {
+                nombreCompleto: _usuarioPorId.nombre_usuario,
+                nombreEvento: _eventoPorId.nombre_evento,
+                fechaEvento: _eventoPorId.fecha_evento,
+                lugarEvento: _eventoPorId.ubicacion_evento,
+                fechaEmision: new Date().toISOString().split('T')[0],
+            }
+
+            const URL_GCA = await generarHTML_CodigoAleatorio(datosCertificado)
+
+            if (!URL_GCA) {
+                _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
+                return res.status(404).json({
+                    Error: 'Error Inesperado!!'
+                })
+            }
+
+            const dataCertificado = {
+                "registro_id": id,
+                "url_certificado": URL_GCA,
+            }
+
+            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.commit() : null
+            const CertificadoGuardado = await guardarCertificado(0, dataCertificado)
+
+            if (CertificadoGuardado.ok) {
+
+                _registroAsistenciaGuardado.transaction = 'commit'
+
+                return res.status(200).json({
+                    ok: {
+                        Registro: _registroAsistenciaGuardado,
+                        Certificado: CertificadoGuardado
+                    }
+                })
+            }
+
+            if (CertificadoGuardado.Error) {
+
+                _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
+
+                return res.status(404).json({
+                    Error: 'Error al guardar el Certificado!'
+                })
+            }
+
+        } else if (_registroAsistenciaGuardado.ok) {
+
+            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.commit() : null
 
             return res.status(200).json(_registroAsistenciaGuardado)
+
         }
 
         if (_registroAsistenciaGuardado.Error) {
+
+            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
 
             return res.status(404).json({
                 Error: 'Error al guardar el Registro de Asistencia!'

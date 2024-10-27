@@ -18,9 +18,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "html-pdf-node": "^1.0.8",
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "mysql2": "^3.11.3",
+    "puppeteer": "^23.6.0",
     "sequelize": "^6.37.3",
     "uuid": "^10.0.0",
     "zod": "^3.22.4"

@@ -29,9 +29,9 @@ Certificados.init({
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            isUrl: {
+            /* isUrl: {
                 msg: 'Debe ser una URL válida.'
-            },
+            }, */
             notNull: {
                 msg: 'La URL del certificado es obligatoria.'
             },

@@ -90,6 +90,8 @@ const guardarRegistroAsistencia = async (id, nuevoRegistro) => {
 
             console.log('Registro de Asistencia A guardar:', nuevoRegistro)
 
+            const T = await sequelize.transaction()
+
             if (nuevoRegistro.asistio) {
                 let hoy = new Date().toISOString().split('T')[0]
                 nuevoRegistro.fecha_confirmacion = hoy
@@ -98,19 +100,23 @@ const guardarRegistroAsistencia = async (id, nuevoRegistro) => {
             const [actualizacion] = await RegistroAsistencia.update(nuevoRegistro, {
                 where: {
                     id_registro: id
-                }
+                },
+                transaction: T,
             })
 
             if (actualizacion === 0) {
                 return {
                     ok: "No se realizaron cambios, los datos del Registro de Asistencia son los mismos!",
-                    data: nuevoRegistro
+                    data: nuevoRegistro,
+                    asistio: nuevoRegistro.asistio
                 }
             }
 
             return {
                 ok: "Registro de Asistencia actualizado exitosamente!",
-                data: nuevoRegistro
+                data: nuevoRegistro,
+                asistio: nuevoRegistro.asistio,
+                transaction: T
             }
         }
 
