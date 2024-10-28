@@ -3,6 +3,7 @@ import routesOrganizadores from './organizadores.routes.js'
 import routesEventos from './eventos.routes.js'
 import routesAsistencia from './registroAsistencia.routes.js'
 import routesCertificados from './certificados.routes.js'
+import routesAdmin from './admin.routes.js'
 
 
 export default [{
@@ -24,5 +25,9 @@ export default [{
     {
         path: '/certificados',
         router: routesCertificados
+    },
+    {
+        path: '/admin',
+        router: routesAdmin
     },
 ]

@@ -14,10 +14,13 @@ import {
 import {
     usuarioSchema
 } from "../schemas/usuario.schema.js"
+import {
+    esAutentico
+} from '../middlewares/esAutentico.js'
 
 const routesUsuarios = Router()
 
-routesUsuarios.get('/usuarios_lista', usuarios_lista)
+routesUsuarios.get('/usuarios_lista', esAutentico, usuarios_lista)
 routesUsuarios.get('/:id', usuario_porid)
 routesUsuarios.post('/crear_usuario', validarSchemmaGenerico(usuarioSchema), crear_usuario)
 routesUsuarios.put('/editar_usuario/:id', validarSchemmaGenerico(usuarioSchema), editar_usuario)

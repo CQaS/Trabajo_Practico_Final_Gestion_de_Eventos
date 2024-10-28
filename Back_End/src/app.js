@@ -1,8 +1,12 @@
 import express from 'express'
+import session from 'express-session'
 import morgan from 'morgan'
 import cors from 'cors'
 import routes from './routers/index.js'
 import bodyParser from 'body-parser'
+import {
+    SECRET_KEY
+} from './config.js'
 
 const app = express()
 
@@ -17,6 +21,15 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(bodyParser.urlencoded({
     extended: true
+}))
+
+app.use(session({
+    secret: SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false
+    }
 }))
 
 app.use(bodyParser.json())
