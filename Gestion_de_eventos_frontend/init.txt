@@ -1,0 +1,3 @@
+ng new Gestion_de_eventos_frontend
+ng g c components/lista-Eventos
+ng g s services/evento

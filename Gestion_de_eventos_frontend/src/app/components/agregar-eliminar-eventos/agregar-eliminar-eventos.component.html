@@ -1,0 +1,45 @@
+<!-- <app-progress-bar *ngIf="loading"></app-progress-bar>
+<div *ngIf="!loading" class="row mt-1">
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card text-white bg-secondary mb-3" style="max-width: 25rem;">
+      <div class="card-header text-center">{{ operacion }} Evento</div>
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="agregarEvento()">
+          <input formControlName="nombre_evento" type="text" class="form-control"
+            placeholder="Ingrese nombre del Evento">
+          <span *ngIf="form.get('nombre_evento')?.hasError('required') && form.get('nombre_evento')?.touched">
+            El campo nombre es <strong>requerido</strong>
+          </span>
+          <input formControlName="fecha_evento" type="date" class="form-control mt-2">
+          <span *ngIf="form.get('fecha_evento')?.hasError('required') && form.get('fecha_evento')?.touched">
+            El campo Fecha evento es <strong>requerido</strong>
+          </span>
+          <input formControlName="ubicacion_evento" type="text" class="form-control mt-2"
+            placeholder="Ingrese ubicacion">
+          <span *ngIf="form.get('ubicacion_evento')?.hasError('required') && form.get('ubicacion_evento')?.touched">
+            El campo ubicacion Evento es <strong>requerido</strong>
+          </span>
+          <input formControlName="descripcion_evento" type="text" class="form-control mt-2"
+            placeholder="Ingrese descripcion Evento">
+          <span *ngIf="form.get('descripcion_evento')?.hasError('required') && form.get('descripcion_evento')?.touched">
+            El campo descripcion Evento es <strong>requerido</strong>
+          </span>
+          <input formControlName="organizador_id" type="number" class="form-control mt-2"
+            placeholder="Elija Org. Evento">
+          <span *ngIf="form.get('organizador_id')?.hasError('required') && form.get('organizador_id')?.touched">
+            El campo Org. Evento es <strong>requerido</strong>
+          </span>
+          <div class="row mt-2 text-center">
+            <div class="col-lg-6">
+              <button routerLink="/" type="button" class="btn btn-secondary">Volver</button>
+            </div>
+            <div class="col-lg-6">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Aceptar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ -->

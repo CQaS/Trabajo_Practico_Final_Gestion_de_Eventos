@@ -10,12 +10,12 @@ import {
 
 const app = express()
 
-/* const corsOptions = {
-    origin: ['http://127.0.0.1:5500'],
+const corsOptions = {
+    origin: ['http://127.0.0.1:4200'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }
-app.use(cors(corsOptions)) */
+app.use(cors())
 
 app.use(morgan('dev'))
 app.use(express.json())
