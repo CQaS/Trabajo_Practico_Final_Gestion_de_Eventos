@@ -18,7 +18,6 @@ import { ProgressBarComponent } from './shared/progress-bar/progress-bar.compone
 import { ListaEventosComponent } from './components/lista-eventos/lista-eventos.component';
 import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-eventos/agregar-eliminar-eventos.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +26,7 @@ import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-e
     AddEditProductComponent,
     ProgressBarComponent,
     ListaEventosComponent,
-    AgregarEliminarEventosComponent
+    AgregarEliminarEventosComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,11 +35,12 @@ import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-e
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-bottom-right'
+      timeOut: 2000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
     }), // ToastrModule added
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
