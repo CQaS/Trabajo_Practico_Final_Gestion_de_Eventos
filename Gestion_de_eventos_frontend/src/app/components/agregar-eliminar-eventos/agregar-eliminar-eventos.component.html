@@ -2,7 +2,7 @@
 <div *ngIf="!loading" class="row mt-1">
   <div class="col-lg-4 offset-lg-4">
     <div class="card text-white bg-secondary mb-3" style="max-width: 25rem;">
-      <div class="card-header text-center"> Evento</div>
+      <div class="card-header text-center"> {{ op }} Evento</div>
       <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="agregarEvento()">
           <input formControlName="nombre_evento" type="text" class="form-control"

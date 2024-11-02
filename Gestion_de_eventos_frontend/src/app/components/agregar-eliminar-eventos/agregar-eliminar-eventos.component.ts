@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from 'src/app/interfaces/evento';
 import { EventoService } from 'src/app/services/evento.service';
+import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-agregar-eliminar-eventos',
@@ -13,12 +15,15 @@ import { EventoService } from 'src/app/services/evento.service';
 export class AgregarEliminarEventosComponent implements OnInit {
   form: FormGroup;
   loading: boolean = false;
+  id: number;
+  op: string = 'Agregar ';
 
   constructor(
     private fb: FormBuilder,
     private _eventosServices: EventoService,
     private toast: ToastrService,
-    private _router: Router
+    private _router: Router,
+    private params: ActivatedRoute
   ) {
     this.form = this.fb.group({
       nombre_evento: ['', [Validators.required, Validators.maxLength(100)]],
@@ -27,15 +32,20 @@ export class AgregarEliminarEventosComponent implements OnInit {
       descripcion_evento: ['', Validators.required],
       organizador_id: ['', Validators.required],
     });
+    this.id = Number(params.snapshot.paramMap.get('id'));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.id != 0) {
+      this.op = 'Editar ';
+      this.buscarEvento(this.id);
+      this.loading = false;
+    }
+  }
 
   agregarEvento() {
     this.loading = true;
 
-    console.log(this.form.value.nombre_evento);
-    console.log(this.form.get('nombre_evento')?.value);
     const evento: Evento = {
       nombre_evento: this.form.value.nombre_evento,
       fecha_evento: this.form.value.fecha_evento,
@@ -44,29 +54,73 @@ export class AgregarEliminarEventosComponent implements OnInit {
       organizador_id: this.form.value.organizador_id,
     };
 
-    console.log('Evento a agregar', evento);
+    if (this.id !== 0) {
+      // Modo editar
+      evento.id_evento = this.id;
+      this.procesarEvento(
+        this._eventosServices.editEvento(this.id, evento),
+        'editar'
+      );
+    } else {
+      // Modo agregar
+      this.procesarEvento(this._eventosServices.addEvento(evento), 'agregar');
+    }
+  }
 
-    this._eventosServices.addEvento(evento).subscribe({
-      next: (response) => {
+  private procesarEvento(
+    observable: Observable<any>,
+    accion: 'editar' | 'agregar'
+  ) {
+    const mensajeExito = accion === 'editar' ? 'editado' : 'agregado';
+    const mensajeError = accion === 'editar' ? 'editar' : 'agregar';
+
+    observable.subscribe({
+      next: (response: any) => {
         this.loading = false;
-        console.log('Respuesta de agregado:', response);
+        console.log(`Respuesta de ${mensajeExito}:`, response);
       },
-      error: (e) => {
+      error: (e: HttpErrorResponse) => {
         this.loading = false;
-        console.error('Error al agregar el evento:', e.error);
-        this.toast.warning(
-          'Error al agregar el Evento!',
-          'Info Gestion de Eventos'
-        );
+        console.error(`Error al ${mensajeError} el evento:`, e.error);
+
+        // Construimos un mensaje con todos los errores
+        let mensajeErrores = 'Error al ' + mensajeError + ' el Evento:\n';
+        if (e.error && typeof e.error === 'object') {
+          const mensajes = Object.values(e.error);
+
+          if (mensajes.length > 2) {
+            mensajeErrores = 'El formulario contiene múltiples errores';
+          } else {
+            mensajeErrores = mensajes.map((msg) => `- ${msg}`).join('\n');
+          }
+        } else {
+          mensajeErrores += 'Ocurrió un error inesperado.';
+        }
+
+        this.toast.warning(mensajeErrores, 'Info Gestión de Eventos');
       },
       complete: () => {
         this.loading = false;
         this.toast.success(
-          `Exito al agregar el Evento: ${evento.nombre_evento}!`,
-          'Info Gestion de Eventos'
+          `Éxito al ${mensajeExito} el Evento: ${this.form.value.nombre_evento}!`,
+          'Info Gestión de Eventos'
         );
         this._router.navigate(['/']);
       },
+    });
+  }
+
+  buscarEvento(id: number) {
+    this.loading = true;
+    this._eventosServices.getEventoById(id).subscribe((data: Evento) => {
+      console.log(data);
+      this.form.setValue({
+        nombre_evento: data.nombre_evento,
+        fecha_evento: data.fecha_evento,
+        ubicacion_evento: data.ubicacion_evento,
+        descripcion_evento: data.descripcion_evento,
+        organizador_id: data.organizador_id,
+      });
     });
   }
 }

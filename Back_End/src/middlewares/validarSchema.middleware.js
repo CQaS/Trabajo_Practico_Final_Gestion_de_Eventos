@@ -10,8 +10,9 @@ export const validarSchemmaGenerico = (schema) => (req, res, next) => {
 
         const requeridos = {}
         e.errors.forEach((ERR) => {
+            console.log('schemma ERROR:', ERR.message)
             const campos = ERR.path[0]
-            requeridos[`Es requerido => ${campos}`] = 'Ingresa campo faltante!'
+            requeridos[`Es requerido => ${campos}`] = `${ERR.message}!`
         })
         const jsonResult = JSON.stringify(requeridos, null, 2)
 

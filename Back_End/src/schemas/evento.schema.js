@@ -29,6 +29,9 @@ export const eventoSchema = z.object({
 
     descripcion_evento: z
         .string()
+        .min(5, {
+            message: 'La descripcion debe tener al menos 5 caracteres.'
+        })
         .max(500, {
             message: 'La descripción no puede exceder los 500 caracteres.'
         })

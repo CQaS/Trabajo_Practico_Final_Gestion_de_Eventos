@@ -6,6 +6,10 @@ import {
     eliminarEvento
 } from '../querys/eventos.querys.js'
 
+import {
+    obteneOrganizadorPorId
+} from '../querys/organizadores.querys.js'
+
 export const eventos_lista = async (req, res) => {
     try {
         const _obtenerEventos = await obtenerEventos()
@@ -75,13 +79,13 @@ export const crear_evento = async (req, res) => {
             organizador_id
         } = req.body
 
-        /* const existeRegistro = await obteneRegistroPorId(registro_id)
+        const _organizadorPorId = await obteneOrganizadorPorId(organizador_id)
 
-        if (existeRegistro == null) {
+        if (_organizadorPorId == null) {
             return res.status(404).json({
-                Error: `Registro de asistencia no existe: ${registro_id}`
+                Error: `Organizador no encontrado!: ${organizador_id}`
             })
-        } */
+        }
 
         const EventoGuardado = await guardarEvento(0, req.body)
 
