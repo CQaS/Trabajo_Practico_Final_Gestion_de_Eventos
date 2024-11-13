@@ -1,3 +1,29 @@
 ng new Gestion_de_eventos_frontend
+
+ng serve --o
+
 ng g c components/lista-Eventos
 ng g s services/evento
+
+app-routing.module.ts
+const routes: Routes = [
+  { path: '', component: indexComponent },
+  ...
+  ...
+  { path: '**', redirectTo: '', pathMatch: 'full' },
+];
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+ReactiveFormsModule, //validaciones
+HttpClientModule
+
+
+npm i ngx-toastr
+npm i @angular/animations
+
+
+2.47
+
+
