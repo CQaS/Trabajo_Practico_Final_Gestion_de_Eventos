@@ -15,7 +15,9 @@ export const eventos_lista = async (req, res) => {
         const _obtenerEventos = await obtenerEventos()
         console.log(_obtenerEventos)
         console.log(_obtenerEventos.length)
-        res.json(_obtenerEventos)
+        res.json({
+            ok: _obtenerEventos
+        })
 
     } catch (err) {
         console.error(err)
@@ -31,7 +33,9 @@ export const eventos_proximos = async (req, res) => {
         const _obtenerEventosProximos = await obtenerEventosProximos()
         console.log(_obtenerEventosProximos)
         console.log(_obtenerEventosProximos.length)
-        res.json(_obtenerEventosProximos)
+        res.status(200).json({
+            ok: _obtenerEventosProximos
+        })
 
     } catch (err) {
         console.error(err)
@@ -46,12 +50,15 @@ export const evento_porid = async (req, res) => {
 
     try {
         const id = req.params.id
+        let E = null
 
         let _eventoPorId = await obteneEventoPorId(id)
-        _eventoPorId != null ? console.log(_eventoPorId) : _eventoPorId = {
+        _eventoPorId != null ? E = {
+            ok: _eventoPorId
+        } : E = {
             Error: 'Evento no encontrado!'
         }
-        res.json(_eventoPorId)
+        res.json(E)
 
     } catch (err) {
         console.error(err)

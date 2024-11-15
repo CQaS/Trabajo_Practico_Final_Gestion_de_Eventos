@@ -10,7 +10,9 @@ export const organizadores_lista = async (req, res) => {
         const _obtenerOrganizadores = await obtenerOrganizadores()
         console.log(_obtenerOrganizadores)
         console.log(_obtenerOrganizadores.length)
-        res.json(_obtenerOrganizadores)
+        res.json({
+            ok: _obtenerOrganizadores
+        })
 
     } catch (err) {
         console.error(err)
@@ -25,12 +27,15 @@ export const organizador_porid = async (req, res) => {
 
     try {
         const id = req.params.id
+        let O = null
 
         let _organizadorPorId = await obteneOrganizadorPorId(id)
-        _organizadorPorId != null ? console.log(_organizadorPorId) : _organizadorPorId = {
+        _organizadorPorId != null ? O = {
+            ok: _organizadorPorId
+        } : O = {
             Error: 'Organizador no encontrado!'
         }
-        res.json(_organizadorPorId)
+        res.json(O)
 
     } catch (err) {
         console.error(err)

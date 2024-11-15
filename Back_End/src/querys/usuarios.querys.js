@@ -89,8 +89,8 @@ const guardarUsuario = async (id, datosUsuario) => {
                 Error: error
             }
         } else {
-            console.error('Error al crear el usuario:', error)
-            throw new Error('Error al crear el usuario: ' + error.message)
+            console.error('Error al crear/editar el usuario:', error)
+            throw new Error('Error al crear/editar el usuario: ' + error.message)
         }
     }
 }

@@ -25,7 +25,9 @@ export const registroAsistencia_lista = async (req, res) => {
         const _obtenerRegistroAsistencia = await obtenerRegistros()
         console.log(_obtenerRegistroAsistencia)
         console.log(_obtenerRegistroAsistencia.length)
-        res.json(_obtenerRegistroAsistencia)
+        res.json({
+            ok: _obtenerRegistroAsistencia
+        })
 
     } catch (err) {
         console.error(err)
@@ -43,7 +45,9 @@ export const listarUsuariosAsistentes = async (req, res) => {
         const _listarUsuariosAsistentes = await obtenerRegistrosAsistentes(eventoid)
         console.log(_listarUsuariosAsistentes)
         console.log(_listarUsuariosAsistentes.length)
-        res.json(_listarUsuariosAsistentes)
+        res.json({
+            ok: _listarUsuariosAsistentes
+        })
 
     } catch (err) {
         console.error(err)
@@ -58,12 +62,15 @@ export const registroAsistencia_porid = async (req, res) => {
 
     try {
         const id = req.params.id
+        let A = null
 
         let _registroAsistenciaPorId = await obteneRegistroPorId(id)
-        _registroAsistenciaPorId != null ? console.log(_registroAsistenciaPorId) : _registroAsistenciaPorId = {
+        _registroAsistenciaPorId != null ? A = {
+            ok: _registroAsistenciaPorId
+        } : A = {
             Error: 'Registro de Asistencia no encontrado!'
         }
-        res.json(_registroAsistenciaPorId)
+        res.json(A)
 
     } catch (err) {
         console.error(err)

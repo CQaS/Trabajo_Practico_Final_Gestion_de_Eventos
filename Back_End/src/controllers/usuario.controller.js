@@ -12,7 +12,9 @@ export const usuarios_lista = async (req, res) => {
         const _obtenerUsuarios = await obtenerUsuarios()
         console.log(_obtenerUsuarios)
         console.log(_obtenerUsuarios.length)
-        res.json(_obtenerUsuarios)
+        res.status(200).json({
+            ok: _obtenerUsuarios
+        })
 
     } catch (err) {
         console.error(err)
@@ -27,12 +29,15 @@ export const usuario_porid = async (req, res) => {
 
     try {
         const id = req.params.id
+        let U = null
 
         let _usuarioPorId = await obtenerUsuarioPorId(id)
-        _usuarioPorId != null ? console.log(_usuarioPorId) : _usuarioPorId = {
+        _usuarioPorId != null ? U = {
+            ok: _usuarioPorId
+        } : U = {
             Error: 'Usuario no encontrado!'
         }
-        res.json(_usuarioPorId)
+        res.json(U)
 
     } catch (err) {
         console.error(err)

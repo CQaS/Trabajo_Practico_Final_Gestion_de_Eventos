@@ -15,7 +15,9 @@ export const certificados_lista = async (req, res) => {
         const _obtenerCertificados = await obtenerCertificados()
         console.log(_obtenerCertificados)
         console.log(_obtenerCertificados.length)
-        res.json(_obtenerCertificados)
+        res.json({
+            ok: _obtenerCertificados
+        })
 
     } catch (err) {
         console.error(err)
@@ -30,12 +32,15 @@ export const certificado_porid = async (req, res) => {
 
     try {
         const id = req.params.id
+        let C = null
 
         let _certificadoPorId = await obteneCertificadoPorId(id)
-        _certificadoPorId != null ? console.log(_certificadoPorId) : _certificadoPorId = {
+        _certificadoPorId != null ? C = {
+            ok: _certificadoPorId
+        } : C = {
             Error: 'certificado no encontrado!'
         }
-        res.json(_certificadoPorId)
+        res.json(C)
 
     } catch (err) {
         console.error(err)
@@ -50,12 +55,15 @@ export const certificado_porEmail = async (req, res) => {
 
     try {
         const email = req.params.email
+        let Des = null
 
         let _certificadoPorEmail = await obteneCertificadoPorEmail(email)
-        _certificadoPorEmail != null ? console.log(_certificadoPorEmail) : _certificadoPorEmail = {
+        _certificadoPorEmail != null ? Des = {
+            ok: _certificadoPorEmail
+        } : Des = {
             Error: 'Certificados no encontrados!'
         }
-        res.json(_certificadoPorEmail)
+        res.json(Des)
 
     } catch (err) {
         console.error(err)
