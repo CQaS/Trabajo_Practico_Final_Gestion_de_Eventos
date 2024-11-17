@@ -1,18 +1,25 @@
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import {
+    SECRET_KEY
+} from '../config.js'
+import Invalid_tokens from '../models/invalid_tokens.models.js'
+
 const users = [{
         username: 'admin',
-        password: 'password'
+        password: '$2a$10$z3X8C.j3NiyIPSrkem1j7eRRkBfpAdX4t4ZWeK31Nw/ZawrsTRv3G'
     },
     {
         username: 'user1',
-        password: '123456'
+        password: '$2a$10$rCJ2GTJspGnJ84uS2zRohOf2mtZYSxYqaU9BuXZssKR2uD7GMp/26'
     },
     {
         username: 'user2',
-        password: 'qwerty'
+        password: '$2a$10$lvyvNwwpgB8GHPF3oGphu.nVt8.UShCmurTLmaiAZWx5Hy855kMSS'
     }
 ]
 
-export const login = (req, res) => {
+export const login = async (req, res) => {
     try {
 
         const {
@@ -21,25 +28,33 @@ export const login = (req, res) => {
         } = req.body
 
         const user = users.find(
-            (u) => u.username === username && u.password === password
+            (u) => u.username === username
         )
 
-        if (user) {
-
-            req.session.user = {
-                username: user.username
-            }
-
-            return res.status(200).json({
-                ok: 'Inicio de sesión exitoso'
-            })
-
-        } else {
+        if (!user) {
 
             return res.status(401).json({
-                error: 'Usuario o contraseña incorrectos'
+                Error: 'Usuario o contraseña incorrectos'
             })
         }
+
+        const passwordHash = await bcrypt.compare(password, user.password)
+        if (!passwordHash) {
+
+            return res.status(401).json({
+                Error: 'Usuario o contraseña incorrectos'
+            })
+        }
+
+        const token = jwt.sign({
+            users,
+        }, SECRET_KEY || 'und7dj383902hd')
+
+        res.header('Authorization', `Bearer ${token}`)
+
+        res.json({
+            token
+        })
 
     } catch (err) {
         console.error(err)
@@ -50,18 +65,41 @@ export const login = (req, res) => {
     }
 }
 
-export const logout = (req, res) => {
+export const logout = async (req, res) => {
 
-    req.session.destroy((err) => {
+    const headerToken = req.headers['authorization']
+    console.log(req.headers)
 
-        if (err) {
-            return res.status(500).json({
-                error: 'Error al cerrar sesión'
+
+    if (headerToken != undefined && headerToken.startsWith('Bearer ')) {
+        // Tiene token
+        try {
+            const bearerToken = headerToken.split(' ')[1]
+            if (!bearerToken) {
+                return res.status(401).json({
+                    Error: 'Algo Fallo, null Token'
+                })
+            }
+
+            await Invalid_tokens.create({
+                token: bearerToken
+            });
+            console.log('Token invalidado correctamente')
+            res.status(200).json({
+                ok: 'Session finalizado correctamente!'
+            })
+
+        } catch (error) {
+
+            console.log(error)
+            res.status(401).json({
+                Error: 'token no valido'
             })
         }
-        res.clearCookie('connect.sid')
-        return res.status(200).json({
-            ok: 'Cierre de sesión exitoso'
+
+    } else {
+        res.status(401).json({
+            Error: 'Acceso denegado'
         })
-    })
+    }
 }
