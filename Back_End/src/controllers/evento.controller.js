@@ -15,9 +15,10 @@ export const eventos_lista = async (req, res) => {
         const _obtenerEventos = await obtenerEventos()
         console.log(_obtenerEventos)
         console.log(_obtenerEventos.length)
-        res.json({
+        /* res.json({
             ok: _obtenerEventos
-        })
+        }) */
+        res.json(_obtenerEventos)
 
     } catch (err) {
         console.error(err)

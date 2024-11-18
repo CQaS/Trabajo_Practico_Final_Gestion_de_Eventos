@@ -9,7 +9,6 @@ import {
     HOST,
     PASSWORD,
     USER,
-
 } from '../config.js'
 
 const sequelize = new Sequelize(DATABASE, USER, PASSWORD, {
@@ -17,13 +16,12 @@ const sequelize = new Sequelize(DATABASE, USER, PASSWORD, {
     dialect: 'mysql'
 })
 
-async function testConnection() {
+const testConnection = async () => {
     try {
         await sequelize.authenticate()
         console.log(`Conectado con DB : ${DATABASE}`)
     } catch (error) {
         console.error(`No se puede conectar a la DB: ${DATABASE}`, error)
-        process.exit(1) // Termina el proceso con un código de error
     }
 }
 

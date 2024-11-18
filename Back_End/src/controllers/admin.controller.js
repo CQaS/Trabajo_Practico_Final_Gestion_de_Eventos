@@ -4,6 +4,9 @@ import {
     SECRET_KEY
 } from '../config.js'
 import Invalid_tokens from '../models/invalid_tokens.models.js'
+import {
+    CheckLimitInvalidTokens
+} from '../lib/checkLomitInvalidTokens.js'
 
 const users = [{
         username: 'admin',
@@ -47,7 +50,7 @@ export const login = async (req, res) => {
         }
 
         const token = jwt.sign({
-            users,
+            user,
         }, SECRET_KEY || 'und7dj383902hd')
 
         res.header('Authorization', `Bearer ${token}`)
@@ -85,6 +88,9 @@ export const logout = async (req, res) => {
                 token: bearerToken
             });
             console.log('Token invalidado correctamente')
+
+            await CheckLimitInvalidTokens()
+
             res.status(200).json({
                 ok: 'Session finalizado correctamente!'
             })

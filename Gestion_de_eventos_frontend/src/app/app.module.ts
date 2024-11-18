@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Modulos
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -17,6 +17,9 @@ import { AddEditProductComponent } from './components/add-edit-product/add-edit-
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 import { ListaEventosComponent } from './components/lista-eventos/lista-eventos.component';
 import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-eventos/agregar-eliminar-eventos.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +30,16 @@ import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-e
     ProgressBarComponent,
     ListaEventosComponent,
     AgregarEliminarEventosComponent,
+    LoginComponent,
+    DashboardComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       timeOut: 2000,
