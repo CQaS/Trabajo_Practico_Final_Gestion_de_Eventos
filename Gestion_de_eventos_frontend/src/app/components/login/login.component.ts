@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Admin } from 'src/app/interfaces/admin';
+import { MsjerrorService } from 'src/app/services/msjerror.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private toast: ToastrService,
     private _usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private _msjError: MsjerrorService
   ) {}
 
   ngOnInit(): void {}
@@ -39,22 +41,13 @@ export class LoginComponent implements OnInit {
     this._usuarioService.login(admin).subscribe({
       next: (T) => {
         console.log(T.token);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
         localStorage.setItem('token', T.token);
       },
       error: (e: HttpErrorResponse) => {
-        this.msjErrors(e);
+        this._msjError.msjErrors(e);
         this.loading = false;
       },
     });
-  }
-
-  msjErrors(e: HttpErrorResponse) {
-    console.log(e);
-    if (e.error.Error) {
-      this.toast.error(e.error.Error, 'Error');
-    } else {
-      this.toast.error('Upps algo ocurrio!!!', 'Error');
-    }
   }
 }

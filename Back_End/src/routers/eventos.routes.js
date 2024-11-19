@@ -21,7 +21,7 @@ import {
 
 const routesEventos = Router()
 
-routesEventos.get('/eventos_lista', eventos_lista)
+routesEventos.get('/eventos_lista', esAutentico, eventos_lista)
 routesEventos.get('/eventos_proximos', eventos_proximos)
 routesEventos.get('/:id', evento_porid)
 routesEventos.post('/crear_evento', validarSchemmaGenerico(eventoSchema), crear_evento)

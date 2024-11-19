@@ -8,9 +8,10 @@ import { ListaEventosComponent } from './components/lista-eventos/lista-eventos.
 import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-eventos/agregar-eliminar-eventos.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './utils/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: ListaEventosComponent },
+  { path: '', component: ListaEventosComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'agregraEvento', component: AgregarEliminarEventosComponent },

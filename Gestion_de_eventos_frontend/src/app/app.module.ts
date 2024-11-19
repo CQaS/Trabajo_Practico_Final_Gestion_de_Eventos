@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 // Modulos
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 // Componentes
@@ -20,6 +20,7 @@ import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-e
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
       preventDuplicates: true,
     }), // ToastrModule added
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenizarInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

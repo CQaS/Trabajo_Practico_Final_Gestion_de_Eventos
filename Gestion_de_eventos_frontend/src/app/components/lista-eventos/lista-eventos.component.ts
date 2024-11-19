@@ -24,7 +24,7 @@ export class ListaEventosComponent implements OnInit {
   getListaEventos() {
     this.loading = true;
     this._eventoServices.getListaEventos().subscribe((data) => {
-      console.log(data);
+      console.log('data', data);
       this.listaEventos = data;
       this.loading = false;
     });
