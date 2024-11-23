@@ -23,10 +23,22 @@ export class ListaEventosComponent implements OnInit {
 
   getListaEventos() {
     this.loading = true;
-    this._eventoServices.getListaEventos().subscribe((data) => {
-      console.log('data', data);
-      this.listaEventos = data;
-      this.loading = false;
+    this._eventoServices.getListaEventos().subscribe({
+      next: (data) => {
+        console.log('data', data);
+        this.listaEventos = data;
+      },
+      error: (err) => {
+        console.error('Error al obtener la lista de eventos:', err);
+        this.loading = false;
+        this.toast.warning(
+          'Error al obtener la lista de eventos!',
+          'Info Gestion de Eventos'
+        );
+      },
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
 

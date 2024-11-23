@@ -12,8 +12,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 // Componentes
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ListProductsComponent } from './components/list-products/list-products.component';
-import { AddEditProductComponent } from './components/add-edit-product/add-edit-product.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 import { ListaEventosComponent } from './components/lista-eventos/lista-eventos.component';
 import { AgregarEliminarEventosComponent } from './components/agregar-eliminar-eventos/agregar-eliminar-eventos.component';
@@ -26,8 +24,6 @@ import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
   declarations: [
     AppComponent,
     NavbarComponent,
-    ListProductsComponent,
-    AddEditProductComponent,
     ProgressBarComponent,
     ListaEventosComponent,
     AgregarEliminarEventosComponent,

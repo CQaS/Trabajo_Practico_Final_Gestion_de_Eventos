@@ -33,7 +33,6 @@ export class EventoService {
       .pipe(
         catchError((err: HttpErrorResponse) => {
           console.error('Error al obtener los eventos:', err);
-          // Retorna un Observable vacío o transforma el error según el caso
           this._msjError.msjErrors(err);
 
           return throwError(
@@ -65,5 +64,20 @@ export class EventoService {
     return this.http.delete<any>(
       `${this.myAppUrl}${this.myApiUrl}eliminar_evento/${id}`
     );
+  }
+
+  getEventosProximos(): Observable<Evento[]> {
+    return this.http
+      .get<Evento[]>(`${this.myAppUrl}${this.myApiUrl}eventos_proximos/`)
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          console.error('Error al obtener los eventos:', err);
+          this._msjError.msjErrors(err);
+
+          return throwError(
+            () => new Error(err.error?.Error || 'Error desconocido')
+          );
+        })
+      );
   }
 }
