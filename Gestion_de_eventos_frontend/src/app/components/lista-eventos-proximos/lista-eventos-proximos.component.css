@@ -1,0 +1,20 @@
+.title {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+table,
+th,
+td {
+  border-radius: 10px;
+}
+
+.modal-body {
+  color: #333;
+}
+
+.descripcion {
+  font-weight: bold;
+  font-size: 1.2rem;
+}

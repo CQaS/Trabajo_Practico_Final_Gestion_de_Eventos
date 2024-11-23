@@ -34,9 +34,10 @@ export const eventos_proximos = async (req, res) => {
         const _obtenerEventosProximos = await obtenerEventosProximos()
         console.log(_obtenerEventosProximos)
         console.log(_obtenerEventosProximos.length)
-        res.status(200).json({
+        /* res.status(200).json({
             ok: _obtenerEventosProximos
-        })
+        }) */
+        res.json(_obtenerEventosProximos)
 
     } catch (err) {
         console.error(err)

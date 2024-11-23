@@ -19,6 +19,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
+import { ListaEventosProximosComponent } from './components/lista-eventos-proximos/lista-eventos-proximos.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
     LoginComponent,
     DashboardComponent,
     SpinnerComponent,
+    ListaEventosProximosComponent,
   ],
   imports: [
     BrowserModule,

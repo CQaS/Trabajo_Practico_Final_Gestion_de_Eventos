@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  existeToken = false;
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.existeToken = !!token;
+  }
 
   logout() {
     localStorage.removeItem('token');
+    this.existeToken = false;
     this.router.navigate(['/login']);
   }
 }

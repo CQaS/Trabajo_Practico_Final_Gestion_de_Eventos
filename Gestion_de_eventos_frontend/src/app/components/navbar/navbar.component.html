@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Gestion de Eventos</a>
     <div class="collapse navbar-collapse" id="navbarColor01">
-      <button class="btn btn-secondary d-flex ms-auto" (click)="logout()" type="button">Logout</button>
+      <button class="btn btn-secondary d-flex ms-auto" (click)="logout()" type="button"
+        *ngIf="existeToken">Logout</button>
     </div>
   </div>
 </nav>

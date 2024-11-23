@@ -10,7 +10,8 @@ const {
 
 import {
     Evento,
-    RegistroAsistencia
+    RegistroAsistencia,
+    Organizador
 } from '../models/asociacion.js'
 
 const obtenerEventos = async () => {
@@ -31,6 +32,11 @@ const obtenerEventosProximos = async () => {
                     [Op.gte]: new Date(),
                 },
             },
+            include: [{
+                model: Organizador,
+                as: 'organizador', // Alias correcto
+                required: true,
+            }, ],
             order: [
                 ['fecha_evento', 'ASC']
             ],

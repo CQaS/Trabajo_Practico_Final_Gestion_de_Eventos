@@ -1,0 +1,59 @@
+<app-navbar></app-navbar>
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div class="container" *ngIf="!loading">
+  <div class="title">
+    <h4>Listado de Eventos Proximos</h4>
+  </div>
+
+  <table *ngIf="listaEventosProximos.length > 0" class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre Evento</th>
+        <th scope="col">Fecha Evento</th>
+        <th scope="col">Ubicacion Evento</th>
+        <th scope="col">Descripcion Evento</th>
+        <th scope="col">Email Organizador</th>
+        <th>Click Detalles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of listaEventosProximos" (click)="verDetalles(e)" class="table-active">
+        <td class="text-center">{{ e.nombre_evento }}</td>
+        <td class="text-center">{{ e.fecha_evento }}</td>
+        <td class="text-center">{{ e.ubicacion_evento }}</td>
+        <td class="text-center">{{ e.descripcion_evento }}</td>
+        <td class="text-center">{{ e.organizador?.email_organizador }}</td>
+        <td>
+          <button class="btn btn-info" (click)="verDetalles(e); $event.stopPropagation()">Detalles</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="listaEventosProximos.length == 0" class="shadow p-2 rounded bg-light">
+    <h3 class="text-center text-dark">Sin Eventos Proximos para Ver!!!</h3>
+  </div>
+</div>
+
+<!-- Modal Detalles del Evento -->
+<div *ngIf="eventoSeleccionado" class="modal" tabindex="-1" style="display: block;" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ eventoSeleccionado.nombre }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="eventoSeleccionado = null"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Descripción:</strong> <br> <span
+            class="descripcion">{{ eventoSeleccionado.descripcion_evento }}</span>
+        </p>
+        <p><strong>Ubicación:</strong> <br> <span class="descripcion">{{ eventoSeleccionado.ubicacion_evento }}</span>
+        </p>
+        <p><strong>Fecha:</strong> <br> <span class="descripcion">{{ eventoSeleccionado.fecha_evento }}</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="eventoSeleccionado = null">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

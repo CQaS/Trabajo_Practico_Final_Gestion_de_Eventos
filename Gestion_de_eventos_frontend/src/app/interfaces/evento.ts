@@ -1,3 +1,5 @@
+import { Organizador } from './organizador';
+
 export interface Evento {
   id_evento?: number;
   nombre_evento: string;
@@ -5,4 +7,5 @@ export interface Evento {
   ubicacion_evento: string;
   descripcion_evento: string;
   organizador_id: number;
+  organizador?: Organizador;
 }
