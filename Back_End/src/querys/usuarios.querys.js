@@ -30,6 +30,19 @@ const obtenerUsuarioPorId = async (id) => {
     }
 }
 
+const obtenerUsuarioPorDni = async (dni) => {
+    try {
+        const usuario = await Usuarios.findOne({
+            where: {
+                dni_usuario: dni
+            }
+        })
+        return usuario
+    } catch (error) {
+        throw new Error('Error al obtener el usuario: ' + error.message)
+    }
+}
+
 const guardarUsuario = async (id, datosUsuario) => {
 
     try {
@@ -136,6 +149,7 @@ export {
     obtenerUsuarios,
     guardarUsuario,
     obtenerUsuarioPorId,
+    obtenerUsuarioPorDni,
     eliminarUsuario,
     consultarDni,
     consultarEmail

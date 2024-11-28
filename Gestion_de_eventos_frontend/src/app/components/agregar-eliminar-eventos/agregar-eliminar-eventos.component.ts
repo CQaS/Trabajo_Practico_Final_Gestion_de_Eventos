@@ -32,7 +32,7 @@ export class AgregarEliminarEventosComponent implements OnInit {
       descripcion_evento: ['', Validators.required],
       organizador_id: ['', Validators.required],
     });
-    this.id = Number(params.snapshot.paramMap.get('id'));
+    this.id = Number(this.params.snapshot.paramMap.get('id'));
   }
 
   ngOnInit(): void {

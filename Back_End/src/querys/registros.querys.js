@@ -27,14 +27,15 @@ const obtenerRegistrosAsistentes = async (evento_id) => {
     try {
         const _registroAsistentes = await RegistroAsistencia.findAll({
             where: {
-                evento_id: evento_id,
-                asistio: true,
+                evento_id: evento_id
             },
             include: [{
                 model: Usuarios,
-                as: 'usuarios',
-                attributes: ['nombre_usuario', 'email_usuario'],
-            }, ],
+                as: 'usuarios'
+            }],
+            order: [
+                ['asistio', 'DESC']
+            ]
         })
 
         console.log('_registroAsistentes', _registroAsistentes)

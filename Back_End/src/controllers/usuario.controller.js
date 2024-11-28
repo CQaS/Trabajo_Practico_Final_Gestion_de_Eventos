@@ -2,6 +2,7 @@ import {
     obtenerUsuarios,
     guardarUsuario,
     obtenerUsuarioPorId,
+    obtenerUsuarioPorDni,
     eliminarUsuario,
     consultarDni,
     consultarEmail
@@ -36,6 +37,27 @@ export const usuario_porid = async (req, res) => {
             ok: _usuarioPorId
         } : U = {
             Error: 'Usuario no encontrado!'
+        }
+        res.json(U)
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
+export const usuario_porDni = async (req, res) => {
+
+    try {
+        const dni = req.params.dni
+        let U = null
+
+        let _usuarioPordni = await obtenerUsuarioPorDni(dni)
+        _usuarioPordni != null ? U = _usuarioPordni : U = {
+            Error: `Usuario con DNI ${dni} no encontrado!`
         }
         res.json(U)
 

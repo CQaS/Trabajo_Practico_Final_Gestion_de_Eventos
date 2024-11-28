@@ -20,6 +20,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
 import { ListaEventosProximosComponent } from './components/lista-eventos-proximos/lista-eventos-proximos.component';
+import { ListaParticipantesPoreventoComponent } from './components/lista-participantes-porevento/lista-participantes-porevento.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ListaEventosProximosComponent } from './components/lista-eventos-proxim
     DashboardComponent,
     SpinnerComponent,
     ListaEventosProximosComponent,
+    ListaParticipantesPoreventoComponent,
   ],
   imports: [
     BrowserModule,

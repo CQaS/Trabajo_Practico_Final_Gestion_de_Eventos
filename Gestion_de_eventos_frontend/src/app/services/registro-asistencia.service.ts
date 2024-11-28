@@ -8,6 +8,7 @@ import { MsjerrorService } from './msjerror.service';
 import { environment } from 'src/environments/environment';
 import { RegistroAsistencia } from '../interfaces/registroAsistencia';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Usuario } from '../interfaces/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +22,13 @@ export class RegistroAsistenciaService {
     this.myApiUrl = 'api/asistencia/';
   }
 
-  addRegistroAsistencia(
-    registro: RegistroAsistencia
+  addRegistroAsistencia_Usuario(
+    idDelevento: number,
+    us: Usuario
   ): Observable<HttpResponse<any>> {
     return this.http.post<any>(
-      `${this.myAppUrl}${this.myApiUrl}crear_registroAsistencia`,
-      registro
+      `${this.myAppUrl}${this.myApiUrl}crear_registroAsistencia/${idDelevento}`,
+      us
     );
   }
 

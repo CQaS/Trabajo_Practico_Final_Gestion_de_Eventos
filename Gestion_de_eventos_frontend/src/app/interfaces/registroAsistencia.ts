@@ -1,3 +1,5 @@
+import { Usuario } from './usuario';
+
 export interface RegistroAsistencia {
   id_registro?: number;
   evento_id: number;
@@ -5,4 +7,5 @@ export interface RegistroAsistencia {
   fecha_registro?: Date | null;
   asistio?: boolean | null;
   fecha_confirmacion?: Date | null;
+  usuarios?: Usuario;
 }

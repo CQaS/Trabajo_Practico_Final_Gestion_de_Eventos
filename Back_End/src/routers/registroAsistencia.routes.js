@@ -15,13 +15,16 @@ import {
 import {
     registroAsistenciaSchema
 } from "../schemas/registro_asistencia.schema.js"
+import {
+    usuarioSchema
+} from "../schemas/usuario.schema.js"
 
 const routesRegistroAsistencia = Router()
 
 routesRegistroAsistencia.get('/registroAsistencia_lista', registroAsistencia_lista)
 routesRegistroAsistencia.get('/listarUsuariosAsistentes/:eventoid', listarUsuariosAsistentes)
 routesRegistroAsistencia.get('/:id', registroAsistencia_porid)
-routesRegistroAsistencia.post('/crear_registroAsistencia', validarSchemmaGenerico(registroAsistenciaSchema), crear_registroAsistencia)
+routesRegistroAsistencia.post('/crear_registroAsistencia/:id', validarSchemmaGenerico(usuarioSchema), crear_registroAsistencia)
 routesRegistroAsistencia.put('/editar_registroAsistencia/:id', validarSchemmaGenerico(registroAsistenciaSchema), editar_registroAsistencia)
 routesRegistroAsistencia.delete('/eliminar_registroAsistencia/:id', eliminar_registroAsistencia)
 

@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div class="container" *ngIf="!loading">
+  <div class="title">
+    <h4>Listado de participantes al Evento</h4>
+  </div>
+
+  <table *ngIf="listar_usuariosPorEvento.length > 0" class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nombre Asistente</th>
+        <th scope="col">Email Asistente</th>
+        <th scope="col">Telefono Asistente</th>
+        <th scope="col">Fecha de registro</th>
+        <th scope="col">Asistencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of listar_usuariosPorEvento" class="table-active">
+        <td class="text-center">{{ e.usuarios?.nombre_usuario }}</td>
+        <td class="text-center">{{ e.usuarios?.email_usuario }}</td>
+        <td class="text-center">{{ e.usuarios?.telefono_usuario }}</td>
+        <td class="text-center">{{ e.fecha_registro }}</td>
+        <td class="text-center"><input type="checkbox" [checked]="e.asistio" /></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="listar_usuariosPorEvento.length == 0" class="shadow p-2 rounded bg-light">
+    <h3 class="text-center text-dark">Sin Usuarios en el Evento para Ver!!!</h3>
+  </div>
+</div>

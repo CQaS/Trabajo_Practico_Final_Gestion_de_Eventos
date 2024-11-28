@@ -14,6 +14,7 @@
         <th scope="col">Descripcion Evento</th>
         <th scope="col">Email Organizador</th>
         <th>Click Detalles</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,7 +25,10 @@
         <td class="text-center">{{ e.descripcion_evento }}</td>
         <td class="text-center">{{ e.organizador?.email_organizador }}</td>
         <td>
-          <button class="btn btn-info" (click)="verDetalles(e); $event.stopPropagation()">Detalles</button>
+          <button class="btn btn-info" (click)="verDetalles(e); $event.stopPropagation()">Detalles del evento</button>
+        </td>
+        <td class="text-center">
+          <button class="btn btn-info" [routerLink]="['/asistentesAevento', e.id_evento]">Ver Asistentes</button>
         </td>
       </tr>
     </tbody>
@@ -40,7 +44,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{ eventoSeleccionado.nombre }}</h5>
+        <h5 class="modal-title">Info del Evento: {{ eventoSeleccionado.nombre_evento }}</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="eventoSeleccionado = null"></button>
       </div>
       <div class="modal-body">
@@ -52,8 +56,88 @@
         <p><strong>Fecha:</strong> <br> <span class="descripcion">{{ eventoSeleccionado.fecha_evento }}</span></p>
       </div>
       <div class="modal-footer">
+        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary" data-mdb-modal-init
+          data-mdb-target="#modalAsistencia" (click)="asistir(eventoSeleccionado)">
+          Registrarse para Asistir
+        </button>
         <button type="button" class="btn btn-secondary" (click)="eventoSeleccionado = null">Cerrar</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="eventoParaAsistir" class="modal" tabindex="-1" style="display: block;" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content w-75">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">Registrarse para asistir al Evento:
+          {{ eventoParaAsistir.nombre_evento }}</h5>
+        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn-close" data-mdb-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <!-- "nombre_usuario": "Juan Pérez",
+      "email_usuario": "juan.perez@example.com",
+      "telefono_usuario": 3124567890,
+      "direccion_usuario": "Calle Falsa 123, Ciudad XYZ",
+      "sexo_usuario": "Masculino",
+      "dni_usuario": "12345678" -->
+
+      <form [formGroup]="form" (ngSubmit)="agregarAsistencia()">
+        <div class="modal-body p-4">
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" formControlName="nombre_usuario" id="nombre_usuario" class="form-control" />
+            <label class="form-label" for="nombre">Nombre</label>
+            <span *ngIf="form.get('nombre_usuario')?.hasError('required') && form.get('nombre_usuario')?.touched">
+              El campo nombre es <strong>requerido</strong>
+            </span>
+          </div>
+
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="email" formControlName="email_usuario" id="email_usuario" class="form-control" />
+            <label class="form-label" for="email_usuario">Email</label>
+            <span *ngIf="form.get('email_usuario')?.hasError('required') && form.get('email_usuario')?.touched">
+              El campo email es <strong>requerido</strong>
+            </span>
+          </div>
+
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="number" formControlName="telefono_usuario" id="telefono" class="form-control" />
+            <label class="form-label" for="telefono">Telefono</label>
+            <span *ngIf="form.get('telefono_usuario')?.hasError('required') && form.get('telefono_usuario')?.touched">
+              El campo telefono es <strong>requerido</strong>
+            </span>
+          </div>
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" formControlName="direccion_usuario" id="direccion_usuario" class="form-control" />
+            <label class="form-label" for="direccion_usuario">Direccion</label>
+            <span *ngIf="form.get('direccion_usuario')?.hasError('required') && form.get('direccion_usuario')?.touched">
+              El campo telefono es <strong>requerido</strong>
+            </span>
+
+          </div>
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" formControlName="sexo_usuario" id="sexo_usuario" class="form-control" />
+            <label class="form-label" for="sexo_usuario">Sexo</label>
+            <span *ngIf="form.get('sexo_usuario')?.hasError('required') && form.get('sexo_usuario')?.touched">
+              El campo sexo es <strong>requerido</strong>
+            </span>
+
+          </div>
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" formControlName="dni_usuario" id="dni_usuario" class="form-control" />
+            <label class="form-label" for="dni_usuario">Dni</label>
+            <span *ngIf="form.get('dni_usuario')?.hasError('required') && form.get('dni_usuario')?.touched">
+              El campo dni es <strong>requerido</strong>
+            </span>
+
+          </div>
+
+          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block"
+            [disabled]="form.invalid">Registrar</button>
+          <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-block"
+            style="margin-left: 10px;" (click)="eventoParaAsistir = null">Cancelar</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

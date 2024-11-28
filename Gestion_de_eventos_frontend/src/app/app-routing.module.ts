@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './utils/auth.guard';
 import { ListaEventosProximosComponent } from './components/lista-eventos-proximos/lista-eventos-proximos.component';
+import { ListaParticipantesPoreventoComponent } from './components/lista-participantes-porevento/lista-participantes-porevento.component';
 
 const routes: Routes = [
   { path: '', component: ListaEventosComponent, canActivate: [AuthGuard] },
@@ -16,6 +17,10 @@ const routes: Routes = [
   { path: 'agregraEvento', component: AgregarEliminarEventosComponent },
   { path: 'editarEvento/:id', component: AgregarEliminarEventosComponent },
   { path: 'eventosProximos', component: ListaEventosProximosComponent },
+  {
+    path: 'asistentesAevento/:id',
+    component: ListaParticipantesPoreventoComponent,
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

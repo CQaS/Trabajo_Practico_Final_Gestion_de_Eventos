@@ -4,6 +4,7 @@ import {
 import {
     usuarios_lista,
     usuario_porid,
+    usuario_porDni,
     crear_usuario,
     editar_usuario,
     eliminar_usuario
@@ -22,6 +23,7 @@ const routesUsuarios = Router()
 
 routesUsuarios.get('/usuarios_lista', esAutentico, usuarios_lista)
 routesUsuarios.get('/:id', usuario_porid)
+routesUsuarios.get('/dni/:dni', usuario_porDni)
 routesUsuarios.post('/crear_usuario', validarSchemmaGenerico(usuarioSchema), crear_usuario)
 routesUsuarios.put('/editar_usuario/:id', validarSchemmaGenerico(usuarioSchema), editar_usuario)
 routesUsuarios.delete('/eliminar_usuario/:id', eliminar_usuario)

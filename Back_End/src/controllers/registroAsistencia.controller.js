@@ -7,6 +7,9 @@ import {
     verificarExistenciaDeRegistro
 } from '../querys/registros.querys.js'
 import {
+    consultarDni,
+    consultarEmail,
+    guardarUsuario,
     obtenerUsuarioPorId
 } from '../querys/usuarios.querys.js'
 import {
@@ -45,9 +48,7 @@ export const listarUsuariosAsistentes = async (req, res) => {
         const _listarUsuariosAsistentes = await obtenerRegistrosAsistentes(eventoid)
         console.log(_listarUsuariosAsistentes)
         console.log(_listarUsuariosAsistentes.length)
-        res.json({
-            ok: _listarUsuariosAsistentes
-        })
+        res.json(_listarUsuariosAsistentes)
 
     } catch (err) {
         console.error(err)
@@ -91,17 +92,11 @@ export const crear_registroAsistencia = async (req, res) => {
 
 
     try {
+        const evento_id = req.params.id
         const {
-            evento_id,
-            usuario_id
+            nombre_usuario,
+            dni_usuario
         } = req.body
-
-        const existeUsuario = await obtenerUsuarioPorId(usuario_id)
-        if (existeUsuario == null) {
-            return res.status(404).json({
-                Error: `Usuario no existe: ${usuario_id}`
-            })
-        }
 
         const _eventoPorId = await obteneEventoPorId(evento_id)
         if (_eventoPorId == null) {
@@ -110,14 +105,45 @@ export const crear_registroAsistencia = async (req, res) => {
             })
         }
 
-        let existenciaDeRegistro = await verificarExistenciaDeRegistro(evento_id, usuario_id)
+        let usuarioVefi = null
+
+        const existeDNI = await consultarDni(dni_usuario)
+
+        console.log(existeDNI)
+
+        if (existeDNI == null) {
+            const UsuarioGuardado = await guardarUsuario(0, req.body)
+
+            if (UsuarioGuardado.ok) {
+
+                usuarioVefi = UsuarioGuardado.id_usuario_nuevo
+            }
+
+            if (UsuarioGuardado.Error) {
+
+                return res.status(404).json({
+                    Error: 'Error al guardar el Usuario!'
+                })
+            }
+
+        } else {
+            usuarioVefi = existeDNI.id_usuario
+        }
+
+        let existenciaDeRegistro = await verificarExistenciaDeRegistro(evento_id, usuarioVefi)
         if (existenciaDeRegistro != null) {
+            console.log(`El Usuario: ${nombre_usuario}, ya se encuentra registrado en el Evento: ${_eventoPorId.nombre_evento}!`)
             return res.status(409).json({
-                Error: `El Usuario: ${existeUsuario.nombre_usuario}, ya se encuentra registrado en el Evento: ${_eventoPorId.nombre_evento}!`
+                Error: `El Usuario: ${nombre_usuario}, ya se encuentra registrado en el Evento: ${_eventoPorId.nombre_evento}!`
             })
         }
 
-        const registroAsistenciaGuardado = await guardarRegistroAsistencia(0, req.body)
+        const asistir = {
+            "usuario_id": usuarioVefi,
+            "evento_id": evento_id
+        }
+
+        const registroAsistenciaGuardado = await guardarRegistroAsistencia(0, asistir)
 
         if (registroAsistenciaGuardado.ok) {
 
