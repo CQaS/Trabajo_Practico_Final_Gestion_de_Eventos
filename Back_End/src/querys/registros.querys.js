@@ -101,8 +101,7 @@ const guardarRegistroAsistencia = async (id, nuevoRegistro) => {
             const [actualizacion] = await RegistroAsistencia.update(nuevoRegistro, {
                 where: {
                     id_registro: id
-                },
-                transaction: T,
+                }
             })
 
             if (actualizacion === 0) {
@@ -116,8 +115,7 @@ const guardarRegistroAsistencia = async (id, nuevoRegistro) => {
             return {
                 ok: "Registro de Asistencia actualizado exitosamente!",
                 data: nuevoRegistro,
-                asistio: nuevoRegistro.asistio,
-                transaction: T
+                asistio: nuevoRegistro.asistio
             }
         }
 

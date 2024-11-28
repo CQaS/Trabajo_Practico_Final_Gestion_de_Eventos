@@ -51,4 +51,44 @@ export class ListaParticipantesPoreventoComponent implements OnInit {
         },
       });
   }
+
+  confirmarAsistencia(eventCheck: Event, e: any): void {
+    const chekeado = (eventCheck.target as HTMLInputElement).checked;
+    console.log(
+      `El usuario ${e.usuarios?.nombre_usuario} tiene asistencia marcada como ${e.asistio} y el checkbox esta ${chekeado}.`
+    );
+
+    const editRegistro: RegistroAsistencia = {
+      evento_id: e.evento_id,
+      usuario_id: e.usuarios?.id_usuario,
+      asistio: chekeado,
+    };
+
+    console.log('Data del Registro a editar: ', editRegistro);
+
+    this.loading = true;
+    this._registroAsistenciaService
+      .editRegistroAsistencia(e.id_registro, editRegistro)
+      .subscribe({
+        next: (data) => {
+          console.log('data', data);
+        },
+        error: (err) => {
+          console.error('Error al editar el resgistro de Asistencia', err);
+          this.loading = false;
+          this.toast.warning(
+            'Error al editar el resgistro de Asistencia!',
+            'Info Gestion de Eventos'
+          );
+        },
+        complete: () => {
+          this.loading = false;
+          this.toast.info(
+            'Editar el resgistro de Asistencia con Exito!',
+            'Info Gestion de Eventos'
+          );
+          this.getListaAsistenteAlEvento(this.idEvento);
+        },
+      });
+  }
 }

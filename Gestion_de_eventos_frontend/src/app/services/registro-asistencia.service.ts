@@ -36,7 +36,7 @@ export class RegistroAsistenciaService {
     id: number,
     registro: RegistroAsistencia
   ): Observable<HttpResponse<any>> {
-    return this.http.post<any>(
+    return this.http.put<any>(
       `${this.myAppUrl}${this.myApiUrl}editar_registroAsistencia/${id}`,
       registro
     );
