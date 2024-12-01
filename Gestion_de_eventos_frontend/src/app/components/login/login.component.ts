@@ -33,6 +33,28 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /* 
+Función para manejar el proceso de inicio de sesión del administrador:
+- Método: ingresar
+- Descripción: Esta función valida las credenciales del administrador y gestiona el proceso de autenticación.
+
+Descripción del funcionamiento:
+- Se verifica si los campos de nombre de usuario (username) y contraseña (password) están vacíos:
+  - Si alguno de los campos está vacío, se muestra una advertencia utilizando el servicio toast, indicando que faltan campos, y se termina la ejecución de la función.
+- Se crea un objeto admin de tipo Admin que contiene las credenciales ingresadas.
+- Se registra el objeto admin en la consola para fines de depuración.
+- Se establece una variable loading en true para indicar que se está procesando la solicitud.
+- Se llama al método login del servicio _usuarioService, pasando el objeto admin como argumento:
+  - En caso de éxito (next):
+    - Se registra el token recibido en la consola.
+    - Se navega a la ruta 'listaDeEventos' utilizando el router.
+    - Se almacena el token en el localStorage para su uso en futuras solicitudes.
+  - En caso de error (error):
+    - Se invoca el método msjErrors del servicio _msjError para manejar y mostrar el error al usuario.
+    - Se establece loading en false para indicar que la solicitud ha finalizado.
+
+Esta función está diseñada para facilitar el inicio de sesión del administrador, asegurando que se validen las credenciales antes de proceder y gestionando adecuadamente los resultados de la autenticación.
+*/
   ingresar() {
     if (this.username == '' || this.password == '') {
       this.toast.warning('Faltan campos', 'Alerta');

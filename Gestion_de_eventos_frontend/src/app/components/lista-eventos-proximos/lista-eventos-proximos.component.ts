@@ -79,6 +79,40 @@ export class ListaEventosProximosComponent implements OnInit {
     this.eventoParaAsistir = eventoAsistir;
   }
 
+  /* 
+Función para agregar la asistencia de un usuario a un evento:
+- Método: agregarAsistencia
+- Descripción: Esta función gestiona el proceso de registro de asistencia de un usuario a un evento y maneja el estado de carga.
+
+Descripción del funcionamiento:
+- Se establece la variable loading en true para indicar que se está procesando la solicitud.
+- Se asigna el ID del evento al que se desea asistir a la variable eventoParaAsistir_id y se establece eventoParaAsistir en null para liberar el objeto.
+- Se crea un objeto U_Asistir_alEvento de tipo Usuario con los datos ingresados en el formulario:
+  - nombre_usuario: Nombre del usuario.
+  - email_usuario: Correo electrónico del usuario.
+  - telefono_usuario: Número de teléfono del usuario.
+  - direccion_usuario: Dirección del usuario.
+  - sexo_usuario: Sexo del usuario.
+  - dni_usuario: Documento Nacional de Identidad del usuario.
+- Se registra en la consola el objeto U_Asistir_alEvento para fines de depuración.
+- Se llama al método addRegistroAsistencia_Usuario del servicio _registroAsistencia, pasando el ID del evento y el objeto U_Asistir_alEvento como argumentos:
+  - En caso de éxito (next):
+    - Se establece loading en false para indicar que la solicitud ha finalizado.
+    - Se registra un mensaje en la consola confirmando la asistencia del usuario al evento junto con la respuesta recibida.
+  - En caso de error (error):
+    - Se establece loading en false para indicar que la solicitud ha finalizado.
+    - Se registra un mensaje de error en la consola, mostrando el error recibido.
+    - Se construye un mensaje con todos los errores devueltos por la API:
+      - Si hay errores específicos, se listan. Si hay múltiples errores, se indica que hay múltiples problemas en el formulario.
+      - Si no hay errores específicos, se muestra un mensaje indicando que el usuario ya estaba registrado para el evento.
+    - Se muestra una advertencia utilizando el servicio toast, informando al usuario sobre los errores ocurridos durante el registro.
+  - En caso de completar (complete):
+    - Se establece loading en false para indicar que la solicitud ha finalizado, independientemente del resultado.
+    - Se muestra un mensaje de éxito utilizando el servicio toast, confirmando que la asistencia fue registrada correctamente.
+    - Se navega a la ruta 'dashboard' utilizando el router.
+
+Esta función está diseñada para facilitar el registro de asistencia de usuarios a eventos, gestionando adecuadamente los estados de carga y los posibles errores durante el proceso, así como proporcionando retroalimentación al usuario sobre el resultado de su acción.
+*/
   agregarAsistencia() {
     this.loading = true;
     this.eventoParaAsistir_id = this.eventoParaAsistir.id_evento;

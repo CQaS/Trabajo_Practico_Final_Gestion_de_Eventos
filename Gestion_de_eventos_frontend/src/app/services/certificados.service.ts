@@ -17,6 +17,22 @@ export class CertificadosService {
     this.myApiUrl = 'api/certificados/';
   }
 
+  /* 
+Función para obtener la lista de certificados:
+- Método: getlistarCertificados
+- Parámetro: email (string) - Correo electrónico del usuario para filtrar los certificados.
+- Retorna: Observable<Certificado[]> - Un observable que emite un arreglo de objetos Certificado.
+
+Descripción del funcionamiento:
+- Se realiza una solicitud HTTP GET a la URL construida a partir de myAppUrl y myApiUrl, añadiendo 'listar/' seguido del email proporcionado.
+- Se utiliza el operador 'pipe' para manejar el flujo de datos y gestionar errores.
+- En caso de que ocurra un error durante la solicitud:
+  - Se registra un mensaje de error en la consola.
+  - Se invoca el método msjErrors del servicio _msjError para manejar y mostrar el error al usuario.
+  - Se lanza un nuevo error con un mensaje específico, utilizando el mensaje de error devuelto por la API o un mensaje genérico 'Error Desconocido'.
+
+Esta función está diseñada para facilitar la obtención de certificados asociados a un usuario específico, manejando adecuadamente cualquier error que pueda surgir durante el proceso.
+*/
   getlistarCertificados(email: string): Observable<Certificado[]> {
     return this.http
       .get<Certificado[]>(`${this.myAppUrl}${this.myApiUrl}listar/${email}`)
@@ -32,6 +48,18 @@ export class CertificadosService {
       );
   }
 
+  /* 
+Función para obtener un certificado por su código:
+- Método: obtenerCertificadoPorCodigo
+- Parámetro: codigo (string) - Código único del certificado que se desea obtener.
+- Retorna: Observable<string> - Un observable que emite el contenido del certificado en formato de texto.
+
+Descripción del funcionamiento:
+- Se realiza una solicitud HTTP GET a la URL construida a partir de myAppUrl y myApiUrl, añadiendo 'imprimir/' seguido del código proporcionado.
+- Se especifica el tipo de respuesta como 'text', lo que indica que se espera recibir el contenido del certificado en formato de texto plano.
+
+Esta función permite recuperar un certificado específico utilizando su código, facilitando la impresión o visualización del mismo.
+*/
   obtenerCertificadoPorCodigo(codigo: string): Observable<string> {
     return this.http.get(`${this.myAppUrl}${this.myApiUrl}imprimir/${codigo}`, {
       responseType: 'text',
