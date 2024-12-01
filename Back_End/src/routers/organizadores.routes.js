@@ -21,6 +21,17 @@ import {
 
 const routesOrganizadores = Router()
 
+/* 
+Rutas para gestionar los organizadores del sistema:
+- `GET /organizadores_lista`: Obtiene la lista de todos los organizadores, protegida por el middleware `esAutentico`.
+- `GET /:id`: Obtiene los datos de un organizador por su ID, protegido por el middleware `esAutentico`.
+- `POST /crear_organizador`: Crea un nuevo organizador. Requiere validación de los datos del cuerpo de la solicitud usando el esquema `organizadorSchema` y el middleware `validarSchemmaGenerico`.
+- `PUT /editar_organizador/:id`: Actualiza los datos de un organizador por su ID, también requiere validación de los datos y protección de autenticación.
+- `DELETE /eliminar_organizador/:id`: Elimina un organizador por su ID, protegido por el middleware `esAutentico`.
+
+Estas rutas están diseñadas para gestionar los organizadores, permitiendo su listado, creación, edición y eliminación, con validaciones y autenticación adecuada.
+*/
+
 routesOrganizadores.get('/organizadores_lista', esAutentico, organizadores_lista)
 routesOrganizadores.get('/:id', esAutentico, organizador_porid)
 routesOrganizadores.post('/crear_organizador', esAutentico, validarSchemmaGenerico(organizadorSchema), crear_organizador)

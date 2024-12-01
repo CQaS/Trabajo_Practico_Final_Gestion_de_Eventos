@@ -22,6 +22,19 @@ import {
 
 const routesCertificados = Router()
 
+/* 
+Rutas para gestionar certificados:
+- `GET /certificados_lista`: Obtiene la lista de todos los certificados, protegido por el middleware `esAutentico`.
+- `GET /:id`: Obtiene un certificado específico por su ID, protegido por el middleware `esAutentico`.
+- `GET /listar/:email`: Lista certificados asociados a un correo electrónico específico.
+- `GET /imprimir/:codigo`: Obtiene un certificado por su código único para impresión o descarga.
+- `POST /crear_certificado`: Crea un nuevo certificado. Requiere autenticación (`esAutentico`) y validación de datos con `certificadoSchema` a través de `validarSchemmaGenerico`.
+- `PUT /editar_certificado/:id`: Actualiza un certificado existente por su ID. Requiere autenticación y validación de datos con `certificadoSchema`.
+- `DELETE /eliminar_certificado/:id`: Elimina un certificado por su ID. Protegido por el middleware `esAutentico`.
+
+Estas rutas están diseñadas para realizar operaciones CRUD sobre certificados, con seguridad y validaciones necesarias.
+*/
+
 routesCertificados.get('/certificados_lista', esAutentico, certificados_lista)
 routesCertificados.get('/:id', esAutentico, certificado_porid)
 routesCertificados.get('/listar/:email', certificado_porEmail)

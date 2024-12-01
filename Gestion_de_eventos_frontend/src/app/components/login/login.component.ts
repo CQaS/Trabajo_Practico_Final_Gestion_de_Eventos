@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Admin } from 'src/app/interfaces/admin';
+import { ExisteTokenService } from 'src/app/services/existe-token.service';
 import { MsjerrorService } from 'src/app/services/msjerror.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -15,15 +16,22 @@ export class LoginComponent implements OnInit {
   username: string = '';
   password: string = '';
   loading: boolean = false;
+  existeToken = false;
 
   constructor(
     private toast: ToastrService,
     private _usuarioService: UsuarioService,
     private router: Router,
-    private _msjError: MsjerrorService
+    private _msjError: MsjerrorService,
+    private existe_token: ExisteTokenService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.existeToken = this.existe_token.existeToken();
+    if (this.existeToken) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   ingresar() {
     if (this.username == '' || this.password == '') {

@@ -24,6 +24,14 @@ import {
 
 const routesRegistroAsistencia = Router()
 
+/* Definición de rutas para el registro de asistencia, que incluyen operaciones de: 
+lectura (GET), 
+creación (POST), 
+actualización (PUT) 
+y eliminación (DELETE). 
+Cada ruta está protegida por la validación de autenticación y algunos parámetros, como el id o eventoid, se pasan en la URL. 
+Además, se aplica una validación de esquema en la creación y edición de registros de asistencia. */
+
 routesRegistroAsistencia.get('/registroAsistencia_lista', esAutentico, registroAsistencia_lista)
 routesRegistroAsistencia.get('/listarUsuariosAsistentes/:eventoid', esAutentico, listarUsuariosAsistentes)
 routesRegistroAsistencia.get('/:id', esAutentico, registroAsistencia_porid)

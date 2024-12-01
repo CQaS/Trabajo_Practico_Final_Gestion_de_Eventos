@@ -28,6 +28,11 @@ app.use(session({
 
 app.use(bodyParser.json())
 
+/* 
+Recorre todas las rutas definidas en el arreglo "routes" y las registra en la aplicación.
+Cada ruta se compone de un "path" y un "router".
+Se añade el prefijo "/api" a cada "path" antes de asignar el router correspondiente.
+*/
 routes.forEach(({
     path,
     router
@@ -35,7 +40,11 @@ routes.forEach(({
     app.use('/api' + path, router)
 })
 
-// Middleware para manejar rutas no existentes
+/* 
+Middleware para manejar rutas no encontradas.
+Si ninguna ruta definida coincide con la solicitud, responde con un error 404 
+y un mensaje en formato JSON indicando que la ruta no fue encontrada.
+*/
 app.use((req, res, next) => {
     res.status(404).json({
         Error: 'Ruta no encontrada'
