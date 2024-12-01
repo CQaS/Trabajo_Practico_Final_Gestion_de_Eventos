@@ -16,7 +16,13 @@ import {
 
 const obtenerEventos = async () => {
     try {
-        const _evento = await Evento.findAll()
+        const _evento = await Evento.findAll({
+            include: [{
+                model: Organizador,
+                as: 'organizador', // Alias correcto
+                required: true,
+            }, ]
+        })
         return _evento
     } catch (error) {
         throw new Error('Error al obtener los Evento: ' + error.message)

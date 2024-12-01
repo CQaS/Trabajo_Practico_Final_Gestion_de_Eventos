@@ -36,7 +36,7 @@ const obteneCertificadoPorEmail = async (email) => {
 
     try {
         const _certificados = await Certificados.findAll({
-            attributes: ['url_certificado'],
+            attributes: ['id_certificado', 'url_certificado'],
             include: [{
                 model: RegistroAsistencia,
                 as: 'registroAsistencia', // Alias correcto

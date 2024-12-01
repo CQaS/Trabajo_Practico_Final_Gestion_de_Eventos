@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Evento } from 'src/app/interfaces/evento';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { EventoService } from 'src/app/services/evento.service';
+import { ExisteTokenService } from 'src/app/services/existe-token.service';
 import { RegistroAsistenciaService } from 'src/app/services/registro-asistencia.service';
 
 @Component({
@@ -21,13 +22,15 @@ export class ListaEventosProximosComponent implements OnInit {
   eventoParaAsistir: any | null = null;
   eventoParaAsistir_id: any | null = null;
   dni: number | null = null;
+  existeToken = false;
 
   constructor(
     private _router: Router,
     private fb: FormBuilder,
     private _eventoServices: EventoService,
     private _registroAsistencia: RegistroAsistenciaService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private existe_token: ExisteTokenService
   ) {
     this.form = this.fb.group({
       nombre_usuario: ['', Validators.required, Validators.maxLength(100)],
@@ -40,6 +43,7 @@ export class ListaEventosProximosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.existeToken = this.existe_token.existeToken();
     this.getListaEventosProximos();
   }
 

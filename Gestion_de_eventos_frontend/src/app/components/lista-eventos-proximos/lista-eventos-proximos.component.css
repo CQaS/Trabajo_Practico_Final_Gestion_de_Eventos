@@ -18,3 +18,13 @@ td {
   font-weight: bold;
   font-size: 1.2rem;
 }
+
+.cardStyle {
+  max-width: 20rem;
+  margin: 10px;
+  transition: .5s;
+}
+
+.cardStyle:hover {
+  transform: scale(1.1);
+}

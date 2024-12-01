@@ -22,10 +22,10 @@ import {
 const routesUsuarios = Router()
 
 routesUsuarios.get('/usuarios_lista', esAutentico, usuarios_lista)
-routesUsuarios.get('/:id', usuario_porid)
-routesUsuarios.get('/dni/:dni', usuario_porDni)
-routesUsuarios.post('/crear_usuario', validarSchemmaGenerico(usuarioSchema), crear_usuario)
-routesUsuarios.put('/editar_usuario/:id', validarSchemmaGenerico(usuarioSchema), editar_usuario)
-routesUsuarios.delete('/eliminar_usuario/:id', eliminar_usuario)
+routesUsuarios.get('/:id', esAutentico, usuario_porid)
+routesUsuarios.get('/dni/:dni', esAutentico, usuario_porDni)
+routesUsuarios.post('/crear_usuario', esAutentico, validarSchemmaGenerico(usuarioSchema), crear_usuario)
+routesUsuarios.put('/editar_usuario/:id', esAutentico, validarSchemmaGenerico(usuarioSchema), editar_usuario)
+routesUsuarios.delete('/eliminar_usuario/:id', esAutentico, eliminar_usuario)
 
 export default routesUsuarios

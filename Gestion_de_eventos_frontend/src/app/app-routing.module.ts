@@ -9,17 +9,35 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './utils/auth.guard';
 import { ListaEventosProximosComponent } from './components/lista-eventos-proximos/lista-eventos-proximos.component';
 import { ListaParticipantesPoreventoComponent } from './components/lista-participantes-porevento/lista-participantes-porevento.component';
+import { ListaCertificadosPorusuarioComponent } from './components/lista-certificados-porusuario/lista-certificados-porusuario.component';
 
 const routes: Routes = [
-  { path: '', component: ListaEventosComponent, canActivate: [AuthGuard] },
+  { path: '', component: DashboardComponent },
+  {
+    path: 'listaDeEventos',
+    component: ListaEventosComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'agregraEvento', component: AgregarEliminarEventosComponent },
-  { path: 'editarEvento/:id', component: AgregarEliminarEventosComponent },
+  {
+    path: 'agregraEvento',
+    component: AgregarEliminarEventosComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'editarEvento/:id',
+    component: AgregarEliminarEventosComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'eventosProximos', component: ListaEventosProximosComponent },
   {
     path: 'asistentesAevento/:id',
     component: ListaParticipantesPoreventoComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'listadecertificados',
+    component: ListaCertificadosPorusuarioComponent,
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

@@ -1,6 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
+  overflow-x: hidden;
   height: 100%;
 }
 
@@ -12,8 +19,16 @@ body {
 }
 
 .logo {
+  margin: 6rem;
   height: 130px;
   margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.logonav {
+  margin: 1rem;
+  height: 130px;
+  border-radius: 50%;
 }
 
 .borde {

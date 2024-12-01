@@ -212,7 +212,6 @@ export const editar_registroAsistencia = async (req, res) => {
             const URL_GCA = await generarHTML_CodigoAleatorio(datosCertificado)
 
             if (!URL_GCA) {
-                _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
                 return res.status(404).json({
                     Error: 'Error Inesperado!!'
                 })
@@ -222,13 +221,9 @@ export const editar_registroAsistencia = async (req, res) => {
                 "registro_id": id,
                 "url_certificado": URL_GCA,
             }
-
-            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.commit() : null
             const CertificadoGuardado = await guardarCertificado(0, dataCertificado)
 
             if (CertificadoGuardado.ok) {
-
-                _registroAsistenciaGuardado.transaction = 'commit'
 
                 return res.status(200).json({
                     ok: {
@@ -240,8 +235,6 @@ export const editar_registroAsistencia = async (req, res) => {
 
             if (CertificadoGuardado.Error) {
 
-                _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
-
                 return res.status(404).json({
                     Error: 'Error al guardar el Certificado!'
                 })
@@ -249,15 +242,11 @@ export const editar_registroAsistencia = async (req, res) => {
 
         } else if (_registroAsistenciaGuardado.ok) {
 
-            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.commit() : null
-
             return res.status(200).json(_registroAsistenciaGuardado)
 
         }
 
         if (_registroAsistenciaGuardado.Error) {
-
-            _registroAsistenciaGuardado.transaction ? _registroAsistenciaGuardado.transaction.rollback() : null
 
             return res.status(404).json({
                 Error: 'Error al guardar el Registro de Asistencia!'

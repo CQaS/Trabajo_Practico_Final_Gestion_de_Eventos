@@ -21,6 +21,7 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { TokenizarInterceptor } from './utils/tokenizar.interceptor';
 import { ListaEventosProximosComponent } from './components/lista-eventos-proximos/lista-eventos-proximos.component';
 import { ListaParticipantesPoreventoComponent } from './components/lista-participantes-porevento/lista-participantes-porevento.component';
+import { ListaCertificadosPorusuarioComponent } from './components/lista-certificados-porusuario/lista-certificados-porusuario.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ListaParticipantesPoreventoComponent } from './components/lista-partici
     SpinnerComponent,
     ListaEventosProximosComponent,
     ListaParticipantesPoreventoComponent,
+    ListaCertificadosPorusuarioComponent,
   ],
   imports: [
     BrowserModule,

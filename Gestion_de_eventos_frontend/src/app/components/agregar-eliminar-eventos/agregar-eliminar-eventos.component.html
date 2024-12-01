@@ -1,10 +1,11 @@
+<app-navbar></app-navbar>
 <app-progress-bar *ngIf="loading"></app-progress-bar>
 <div *ngIf="!loading" class="row mt-1">
   <div class="col-lg-4 offset-lg-4">
     <div class="card text-white bg-secondary mb-3" style="max-width: 25rem;">
       <div class="card-header text-center"> {{ op }} Evento</div>
       <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="agregarEvento()">
+        <form *ngIf="evento" [formGroup]="form" (ngSubmit)="agregarEvento()">
           <input formControlName="nombre_evento" type="text" class="form-control"
             placeholder="Ingrese nombre del Evento">
           <span *ngIf="form.get('nombre_evento')?.hasError('required') && form.get('nombre_evento')?.touched">
@@ -31,13 +32,14 @@
           </span>
           <div class="row mt-2 text-center">
             <div class="col-lg-6">
-              <button routerLink="/" type="button" class="btn btn-secondary">Volver</button>
+              <button routerLink="/listaDeEventos" type="button" class="btn btn-secondary">Volver</button>
             </div>
             <div class="col-lg-6">
               <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Aceptar</button>
             </div>
           </div>
         </form>
+        <h3 *ngIf="!evento">Evento no encontrado!!</h3>
       </div>
     </div>
   </div>

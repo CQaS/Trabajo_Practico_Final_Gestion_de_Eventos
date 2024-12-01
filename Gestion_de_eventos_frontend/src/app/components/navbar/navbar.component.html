@@ -1,9 +1,26 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <img class="logonav" src="../../../assets/img/gestall.png" alt="">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Gestion de Eventos</a>
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <button class="btn btn-secondary d-flex ms-auto" (click)="logout()" type="button"
-        *ngIf="existeToken">Logout</button>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link text-secondary active" href="#">Home |
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary" href="eventosProximos">Eventos Proximos |</a>
+        </li>
+        <li class="nav-item" *ngIf="existeToken">
+          <a class="nav-link text-secondary" href="listaDeEventos">Listar/Agregar/Editar Eventos |</a>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="E-mail: para tu certificado" [(ngModel)]="email"
+          (keyup.enter)="buscarCertificados()" />
+        <button class="btn btn-secondary my-2 my-sm-0" (click)="logout()" type="button"
+          *ngIf="existeToken">Logout</button>
+      </div>
     </div>
   </div>
 </nav>

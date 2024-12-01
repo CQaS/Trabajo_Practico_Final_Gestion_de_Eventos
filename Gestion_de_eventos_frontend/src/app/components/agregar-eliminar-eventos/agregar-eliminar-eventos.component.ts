@@ -17,6 +17,7 @@ export class AgregarEliminarEventosComponent implements OnInit {
   loading: boolean = false;
   id: number;
   op: string = 'Agregar ';
+  evento: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +37,7 @@ export class AgregarEliminarEventosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.evento = false;
     if (this.id != 0) {
       this.op = 'Editar ';
       this.buscarEvento(this.id);
@@ -110,17 +112,31 @@ export class AgregarEliminarEventosComponent implements OnInit {
     });
   }
 
-  buscarEvento(id: number) {
+  buscarEvento(id: number): void {
     this.loading = true;
-    this._eventosServices.getEventoById(id).subscribe((data: Evento) => {
-      console.log(data);
-      this.form.setValue({
-        nombre_evento: data.nombre_evento,
-        fecha_evento: data.fecha_evento,
-        ubicacion_evento: data.ubicacion_evento,
-        descripcion_evento: data.descripcion_evento,
-        organizador_id: data.organizador_id,
-      });
+
+    this._eventosServices.getEventoById(id).subscribe({
+      next: (data: Evento) => {
+        this.evento = true;
+        console.log('Evento encontrado:', data);
+        this.form.setValue({
+          nombre_evento: data.nombre_evento,
+          fecha_evento: data.fecha_evento,
+          ubicacion_evento: data.ubicacion_evento,
+          descripcion_evento: data.descripcion_evento,
+          organizador_id: data.organizador_id,
+        });
+      },
+      error: (err) => {
+        this.evento = false;
+        console.error('Error al buscar el evento:', err);
+        this.toast.warning('Evento no encontrado!', 'Info Gestión de Eventos');
+      },
+      complete: () => {
+        this.evento = true;
+        console.log('Búsqueda de evento completada.');
+        this.loading = false;
+      },
     });
   }
 }

@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<app-progress-bar *ngIf="loading"></app-progress-bar>
+<div class="container" *ngIf="!loading">
+  <div class="title">
+    <h4>Listado de tus Certificados</h4>
+  </div>
+  <div style="display: flex; flex-wrap: wrap;">
+    <div *ngFor="let c of certificados" class="card border-dark mb-3 cardStyle">
+      <div class="card-header">{{ c.registroAsistencia?.usuarios?.nombre_usuario}} <br> {{ c.fecha_emision }}</div>
+      <div class="card-body">
+        <h4 class="card-title">Cod.: {{ c.url_certificado }}</h4>
+        <p class="card-text">Fecha de Confirmacion: {{ c.registroAsistencia?.fecha_confirmacion }}</p>
+        <p class="card-text">Certificado Num.: {{ c.id_certificado }}</p>
+        <button class="btn btn-success" (click)="imprimir(c); $event.stopPropagation()">Imprimir tu Certificado</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="certificados.length == 0" class="shadow p-2 rounded bg-light">
+    <h3 class="text-center text-dark">Sin certificados para Ver!!!</h3>
+  </div>
+</div>

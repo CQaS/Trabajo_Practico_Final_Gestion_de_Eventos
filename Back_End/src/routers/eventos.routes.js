@@ -24,8 +24,8 @@ const routesEventos = Router()
 routesEventos.get('/eventos_lista', esAutentico, eventos_lista)
 routesEventos.get('/eventos_proximos', eventos_proximos)
 routesEventos.get('/:id', evento_porid)
-routesEventos.post('/crear_evento', validarSchemmaGenerico(eventoSchema), crear_evento)
-routesEventos.put('/editar_evento/:id', validarSchemmaGenerico(eventoSchema), editar_evento)
-routesEventos.delete('/eliminar_evento/:id', eliminar_evento)
+routesEventos.post('/crear_evento', esAutentico, validarSchemmaGenerico(eventoSchema), crear_evento)
+routesEventos.put('/editar_evento/:id', esAutentico, validarSchemmaGenerico(eventoSchema), editar_evento)
+routesEventos.delete('/eliminar_evento/:id', esAutentico, eliminar_evento)
 
 export default routesEventos

@@ -5,37 +5,44 @@
     <h4>Listado de Eventos</h4>
     <button type="button" class="btn btn-primary" routerLink="/agregraEvento">Agregar Evento</button>
   </div>
+  <div class="table-responsive">
+    <table *ngIf="listaEventos.length > 0" class="table table-bordred table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre Evento</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Ubicacion Evento</th>
+          <th scope="col">Descripcion Evento</th>
+          <th scope="col">Organizador</th>
+          <th scope="col"></th>
+        </tr>
+        <th></th>
+        <th></th>
+      </thead>
 
-  <table *ngIf="listaEventos.length > 0" class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre Evento</th>
-        <th scope="col">Fecha Evento</th>
-        <th scope="col">Ubicacion Evento</th>
-        <th scope="col">Descripcion Evento</th>
-        <th scope="col">Organizador</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let e of listaEventos" class="table-active">
-        <td>{{ e.id_evento }}</td>
-        <td>{{ e.nombre_evento }}</td>
-        <td>{{ e.fecha_evento }}</td>
-        <td>{{ e.ubicacion_evento }}</td>
-        <td>{{ e.descripcion_evento }}</td>
-        <td>{{ e.organizador_id }}</td>
-        <td>
-          <button routerLink="/editarEvento/{{ e.id_evento }}" type="button" class="btn btn-info btn-sm">Editar</button>
-          <button (click)="eliminarEvento(e.id_evento!)" type="button"
-            class="btn btn-danger btn-sm ms-2">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div *ngIf="listaEventos.length == 0" class="shadow p-2 rounded bg-light">
-    <h3 class="text-center text-dark">Sin Eventos para Ver!!!</h3>
+      <tbody>
+        <tr *ngFor="let e of listaEventos">
+          <td>{{ e.id_evento }}</td>
+          <td>{{ e.nombre_evento }}</td>
+          <td>{{ e.fecha_evento }}</td>
+          <td>{{ e.ubicacion_evento }}</td>
+          <td>{{ e.descripcion_evento }}</td>
+          <td>{{ e.organizador?.nombre_organizador }}</td>
+          <td>
+            <p data-placement="top" data-toggle="tooltip" title="Editar"><button class="btn btn-primary btn-xs"
+                routerLink="/editarEvento/{{ e.id_evento }}">Editar</button>
+            </p>
+          </td>
+          <td>
+            <p data-placement="top" data-toggle="tooltip" title="Eliminar"><button class="btn btn-danger btn-xs"
+                (click)="eliminarEvento(e.id_evento!)">Eliminar</button></p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="listaEventos.length == 0" class="shadow p-2 rounded bg-light">
+      <h3 class="text-center text-dark">Sin Eventos para Ver!!!</h3>
+    </div>
   </div>
 </div>

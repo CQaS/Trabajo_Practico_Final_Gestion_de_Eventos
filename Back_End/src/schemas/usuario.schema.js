@@ -29,9 +29,6 @@ export const usuarioSchema = z.object({
     telefono_usuario: z
         .number()
         .int()
-        .min(1000000000, {
-            message: "El teléfono debe tener 10 dígitos"
-        })
         .max(9999999999, {
             message: "El teléfono no puede exceder 10 dígitos"
         }),

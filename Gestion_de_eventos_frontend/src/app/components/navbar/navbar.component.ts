@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ExisteTokenService } from 'src/app/services/existe-token.service';
+import { buscarCertif } from '../../utils/buscarCertif.utils';
 
 @Component({
   selector: 'app-navbar',
@@ -8,16 +10,24 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   existeToken = false;
-  constructor(private router: Router) {}
+  email: string = '';
+
+  constructor(
+    private router: Router,
+    private existe_token: ExisteTokenService
+  ) {}
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    this.existeToken = !!token;
+    this.existeToken = this.existe_token.existeToken();
+  }
+
+  buscarCertificados() {
+    buscarCertif(this.router, this.email);
   }
 
   logout() {
     localStorage.removeItem('token');
     this.existeToken = false;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/dashboard']);
   }
 }

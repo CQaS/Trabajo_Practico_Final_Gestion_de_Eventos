@@ -18,14 +18,17 @@ import {
 import {
     usuarioSchema
 } from "../schemas/usuario.schema.js"
+import {
+    esAutentico
+} from "../middlewares/esAutentico.js"
 
 const routesRegistroAsistencia = Router()
 
-routesRegistroAsistencia.get('/registroAsistencia_lista', registroAsistencia_lista)
-routesRegistroAsistencia.get('/listarUsuariosAsistentes/:eventoid', listarUsuariosAsistentes)
-routesRegistroAsistencia.get('/:id', registroAsistencia_porid)
+routesRegistroAsistencia.get('/registroAsistencia_lista', esAutentico, registroAsistencia_lista)
+routesRegistroAsistencia.get('/listarUsuariosAsistentes/:eventoid', esAutentico, listarUsuariosAsistentes)
+routesRegistroAsistencia.get('/:id', esAutentico, registroAsistencia_porid)
 routesRegistroAsistencia.post('/crear_registroAsistencia/:id', validarSchemmaGenerico(usuarioSchema), crear_registroAsistencia)
-routesRegistroAsistencia.put('/editar_registroAsistencia/:id', validarSchemmaGenerico(registroAsistenciaSchema), editar_registroAsistencia)
-routesRegistroAsistencia.delete('/eliminar_registroAsistencia/:id', eliminar_registroAsistencia)
+routesRegistroAsistencia.put('/editar_registroAsistencia/:id', esAutentico, validarSchemmaGenerico(registroAsistenciaSchema), editar_registroAsistencia)
+routesRegistroAsistencia.delete('/eliminar_registroAsistencia/:id', esAutentico, eliminar_registroAsistencia)
 
 export default routesRegistroAsistencia

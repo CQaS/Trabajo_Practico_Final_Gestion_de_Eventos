@@ -55,12 +55,9 @@ export const evento_porid = async (req, res) => {
         let E = null
 
         let _eventoPorId = await obteneEventoPorId(id)
-        _eventoPorId != null ? E = {
-            ok: _eventoPorId
-        } : E = {
-            Error: 'Evento no encontrado!'
-        }
-        res.json(E)
+        _eventoPorId != null ? res.status(200).json(_eventoPorId) : res.status(404).json({
+            Error: 'Algo fallo'
+        })
 
     } catch (err) {
         console.error(err)

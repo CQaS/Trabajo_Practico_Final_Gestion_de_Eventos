@@ -1,19 +1,22 @@
-<div class="wrapper">
-  <div *ngIf="!loading" class="body">
-    <img class="logo" src="../../../assets/img/acceso.png" alt="">
-    <h1>Login</h1>
-    <div class="col-sm-10">
-      <input type="text" [(ngModel)]="username" class="form-control-plaintext borde" placeholder="Ingresa Username">
-      <label class="col-sm-2 col-form-label">Usermail</label>
-    </div>
-    <div class="col-sm-10">
-      <input type="password" [(ngModel)]="password" class="form-control-plaintext borde">
-      <label class="col-sm-2 col-form-label">Password</label>
-    </div>
-    <div class="d-grid gap-2">
+<div class="container">
+  <div class="wrapper" *ngIf="!loading">
 
-      <button type="button" (click)="ingresar()" class="btn btn-primary bt-lg">Ingresar</button>
-    </div>
+    <fieldset>
+      <img class="logo" src="../../../assets/img/gestall.png" alt="">
+      <div>
+        <label for="input1" class="form-label mt-4">Email address</label>
+        <input type="text" [(ngModel)]="username" class="form-control" id="input1" aria-describedby="user"
+          placeholder="Ingresa Username">
+        <small id="user" class="form-text text-muted">Nunca compartiremos su correo electrónico con nadie más.</small>
+      </div>
+      <div>
+        <label for="input2" class="form-label mt-4">Password</label>
+        <input type="password" [(ngModel)]="password" class="form-control" id="input2" placeholder="Ingresa Password"
+          autocomplete="off">
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary" (click)="ingresar()">Ingresar</button>
+    </fieldset>
   </div>
   <app-spinner *ngIf="loading"></app-spinner>
 </div>

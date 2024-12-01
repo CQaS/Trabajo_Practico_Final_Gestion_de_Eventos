@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     this._usuarioService.login(admin).subscribe({
       next: (T) => {
         console.log(T.token);
-        this.router.navigate(['/']);
+        this.router.navigate(['listaDeEventos']);
         localStorage.setItem('token', T.token);
       },
       error: (e: HttpErrorResponse) => {

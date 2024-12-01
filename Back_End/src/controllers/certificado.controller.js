@@ -58,12 +58,10 @@ export const certificado_porEmail = async (req, res) => {
         let Des = null
 
         let _certificadoPorEmail = await obteneCertificadoPorEmail(email)
-        _certificadoPorEmail != null ? Des = {
-            ok: _certificadoPorEmail
-        } : Des = {
-            Error: 'Certificados no encontrados!'
-        }
-        res.json(Des)
+        _certificadoPorEmail.length > 0 ? res.status(200).json(_certificadoPorEmail) : res.status(401).json({
+            Error: 'Sin Certificaados'
+        })
+
 
     } catch (err) {
         console.error(err)
