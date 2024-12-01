@@ -31,4 +31,10 @@ export class CertificadosService {
         })
       );
   }
+
+  obtenerCertificadoPorCodigo(codigo: string): Observable<string> {
+    return this.http.get(`${this.myAppUrl}${this.myApiUrl}imprimir/${codigo}`, {
+      responseType: 'text',
+    });
+  }
 }

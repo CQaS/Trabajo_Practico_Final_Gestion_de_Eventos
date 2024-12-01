@@ -1,3 +1,8 @@
+import fs from 'fs'
+import path from 'path'
+import {
+    fileURLToPath
+} from 'url'
 import {
     obtenerCertificados,
     obteneCertificadoPorId,
@@ -55,11 +60,43 @@ export const certificado_porEmail = async (req, res) => {
 
     try {
         const email = req.params.email
-        let Des = null
 
         let _certificadoPorEmail = await obteneCertificadoPorEmail(email)
         _certificadoPorEmail.length > 0 ? res.status(200).json(_certificadoPorEmail) : res.status(401).json({
             Error: 'Sin Certificaados'
+        })
+
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({
+            Error: 'Algo fallo'
+        })
+
+    }
+}
+
+export const certificado_porCodigo = async (req, res) => {
+
+    try {
+        const {
+            codigo
+        } = req.params
+
+        console.log('codigo', codigo)
+        const __filename = fileURLToPath(
+            import.meta.url)
+        const __dirname = path.dirname(__filename)
+
+        const filePath = path.join(__dirname, `../certificados/certificado_${codigo}.html`)
+
+        fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) {
+                console.error('Error leyendo el archivo:', err)
+                return res.status(404).send('Certificado no encontrado')
+            }
+            console.log('imprimir', data)
+            res.status(200).send(data)
         })
 
 

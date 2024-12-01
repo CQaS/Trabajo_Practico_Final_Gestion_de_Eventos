@@ -56,5 +56,23 @@ export class ListaCertificadosPorusuarioComponent implements OnInit {
 
   imprimir(c: any): void {
     console.log('certificado:', c);
+    this._certificadosService
+      .obtenerCertificadoPorCodigo(c.url_certificado)
+      .subscribe({
+        next: (htmlContent) => {
+          const newWindow = window.open('', '_blank');
+          if (newWindow) {
+            newWindow.document.write(htmlContent);
+            newWindow.print();
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener el certficado:', err);
+          this.toast.warning(
+            'Error al obtener el certificado!',
+            'Info Gestion de Eventos'
+          );
+        },
+      });
   }
 }
