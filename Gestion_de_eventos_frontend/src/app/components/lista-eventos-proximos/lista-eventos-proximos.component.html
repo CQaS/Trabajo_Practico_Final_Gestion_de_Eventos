@@ -88,6 +88,14 @@
             </span>
           </div>
           <div class="form-group">
+            <label class="sr-only" for="form-email">Direccion</label>
+            <input type="text" formControlName="direccion_usuario" id="direccion" placeholder="Direccion..."
+              class="form-email form-control">
+            <span *ngIf="form.get('direccion_usuario')?.hasError('required') && form.get('direccion_usuario')?.touched">
+              El campo direccion es <strong>requerido</strong>
+            </span>
+          </div>
+          <div class="form-group">
             <label class="sr-only" for="form-email">Sexo</label>
             <input type="text" formControlName="sexo_usuario" id="sexo_usuario" placeholder="Sexo..."
               class="form-email form-control">
@@ -97,6 +105,8 @@
           </div>
           <div class="form-group">
             <label class="sr-only" for="form-email">Dni</label>
+            <input type="text" formControlName="dni_usuario" id="dni_usuario" placeholder="Dni..."
+              class="form-email form-control">
             <span *ngIf="form.get('dni_usuario')?.hasError('required') && form.get('dni_usuario')?.touched">
               El campo dni es <strong>requerido</strong>
             </span>
